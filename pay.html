@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>VRoomGames – оплата</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="static/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="static/css/app.css?b6f407e5c8a8fb39a2334f7b71a42235" rel="stylesheet">
+    <link href="static/css/fancybox.css" rel="stylesheet">
+    <link href="static/css/flatpickr.css" rel="stylesheet">
+    <link href="static/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css/pay.css">
+    <link rel="stylesheet" href="static/css/jquery-ui.css">
+
+</head>
+
+<body>
+<div class="pay">
+    <a href="index.html" class="closeBtn">
+        <img src="static/img/clloseBtn.png" alt="close">
+    </a>
+    <div class="container">
+        <div class="blockLocation">
+            <div class="ico"><img src="static/img/icoLocation.png" alt=""></div>
+            <p>Вы находитесь в
+                <select name="city" id="">
+                    <option value="">Санкт-Петербурге</option>
+                    <!--<option value="">Москве</option>-->
+                </select>
+            </p>
+        </div>
+        <div class="titlePay">
+            <p>Забронировать <br><span>Билеты</span></p>
+        </div>
+        <div class="wrapperSlider">
+            <div class="oneWindow">
+                <div class="cross"><img src="static/img/cross.png" alt=""></div>
+                <table>
+                    <tr class="poligons" id="poligons">
+                        <td>Полигон</td>
+                        <td>
+                            <button onclick="selectPoint(1);" id="poligon_1" class="activepoint">
+                                <span>чапаева</span>
+                                <br>
+                                <span><img src="static/img/icoPoligon.png" alt="">Горьковская</span>
+                            </button>
+                        </td>
+                        <td>
+                            <button onclick="selectPoint(2);" id="poligon_2">
+                                <span>Попова</span>
+                                <br>
+                                <span><img src="static/img/icoPoligon.png" alt="">Петроградская</span>
+                            </button>
+                        </td>
+                        <td>
+                            <button onclick="selectPoint(3);" id="poligon_3">
+                                <span>Ломоносова</span>
+                                <br>
+                                <span><img src="static/img/icoPoligon.png" alt="">Елизаровская</span>
+                            </button>
+                        </td>
+
+                    </tr>
+                    <tr class="games" id="poligonsgames" style="display: none;">
+                        <td>Игра</td>
+                        <td>
+                            <button onclick="selectGame(1);">
+                                <span>mystery</span>
+                                <br>
+                                <span>of pyramid</span>
+                            </button>
+                        </td>
+                        <td>
+                            <button onclick="selectGame(2);">
+                                <span>ENEMALS</span>
+                                <br>
+                                <!--<span>др игры</span>-->
+                            </button>
+                        </td>
+                        <td>
+                            <button onclick="selectGame(3);">
+                                <span>Playstation</span>
+                                <br>
+                                <span>PRO</span>
+                            </button>
+                        </td>
+                    </tr>
+
+                </table>
+                <div class="btnNext">
+                    <button disabled="disabled" id="step1">Продолжить</button>
+                </div>
+            </div>
+            <div class="twoWindow">
+                <nav>
+                    <div class="nav" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                           role="tab" aria-controls="nav-home" aria-selected="true">Игроки/время</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                           role="tab" aria-controls="nav-profile" aria1-selected="false">Контакты</a>
+                        <!--<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                           role="tab" aria-controls="nav-contact" aria-selected="false">Оплата</a>-->
+                        <div class="backActive">
+                        </div>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <input type="hidden" name="gameId" id="gameId" value="0">
+                    <input type="hidden" name="pointId" id="pointId" value="0">
+                    <input type="hidden" name="day" id="day" value="0">
+                    <input type="hidden" name="month" id="gamemonth" value="0">
+                    <input type="hidden" name="number" id="amount" value="1">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="titleTab">
+                            <p>Игроки</p>
+                        </div>
+
+                        <div id="polzunok"></div>
+
+                        <div class="number">
+                            <input id="contentSlider1" type="hidden" value="">
+                            <span id="contentSlider"></span>
+                        </div>
+                        <div class="inputsCommands">
+                            <input type="radio" name="command" value="True" id="own" checked>
+                            <label for="own">Со своей командой</label>
+                            <input type="radio" name="command" value="False" id="alien">
+                            <label for="alien">С любой командой</label>
+                        </div>
+                        <div class="titlePay">
+                            <p>Дата и время</p>
+                        </div>
+                        <div class="wrapperCalendar">
+                            <div class="month">
+                                <div class="subTitle">
+                                    <p id="month">Март 2019</p>
+                                </div>
+
+
+                                <div class="calendar">
+
+                                    <div class="cross">
+                                        <img src="static/img/krest3.png" alt="">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <ul class="navDots" id="calendarDots">
+                          <!--  <li></li>
+                            <li></li>
+                            <li></li>
+                            <li class="active"></li>
+                            <li><a href=""></a></li>
+                            <li></li>
+                            <li></li>-->
+                        </ul>
+                        <div class="wrapperTime">
+                            <div class="day">
+                                <div class="subTitle">
+                                    <p id="selectDateDay"><!--Суббота 30 марта--></p>
+                                </div>
+                                <div class="reservationTime" id="reservationTime">
+                                <!--    <div class="myBorder">
+                                        <a href="#">
+                                            <div class="time">10:00</div>
+                                            <div class="price">1000 р.</div>
+                                        </a>
+                                    </div>
+                                    <div class="myBorder">
+                                        <a href="#">
+                                            <div class="time">10:00</div>
+                                            <div class="price">1000 р.</div>
+                                        </a>
+                                    </div>
+                                    <div class="myBorder">
+                                        <a href="#">
+                                            <div class="time">10:00</div>
+                                            <div class="price">1000 р.</div>
+                                        </a>
+                                    </div>
+                                    <div class="myBorder">
+                                        <a href="#">
+                                            <div class="time">10:00</div>
+                                            <div class="price">1000 р.</div>
+                                        </a>
+                                    </div>
+                                    <div class="myBorder">
+                                        <a href="#">
+                                            <div class="time">10:00</div>
+                                            <div class="price">1000 р.</div>
+                                        </a>
+                                    </div>
+                                    <div class="myBorder">
+                                        <a href="#">
+                                            <div class="time">10:00</div>
+                                            <div class="price">1000 р.</div>
+                                        </a>
+                                    </div>
+                                    <div class="myBorder">
+                                        <a href="#">
+                                            <div class="time">10:00</div>
+                                            <div class="price">1000 р.</div>
+                                        </a>
+                                    </div>
+                                    <div class="myBorder busy">
+                                        <a href="#">
+                                            <div class="time">10:00</div>
+                                            <div class="price">1000 р.</div>
+                                        </a>
+                                    </div>
+                                    <div class="myBorder busy">
+                                        <a href="#">
+                                            <div class="time">10:00</div>
+                                            <div class="price">1000 р.</div>
+                                        </a>
+                                    </div>
+                                    <div class="myBorder busy">
+                                        <a href="#">
+                                            <div class="time">10:00</div>
+                                            <div class="price">1000 р.</div>
+                                        </a>
+                                    </div>-->
+
+
+                                   <table>
+                                        <tr>
+                                            <td class="myBorder ">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder ">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder">
+                                                <a href="#" class="active">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder busy">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder busy">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="myBorder">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="myBorder">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder busy">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder busy">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                            <td class="myBorder">
+                                                <a href="#">
+                                                    <div class="time">10:00</div>
+                                                    <div class="price">1000 р.</div>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="navDots">
+                            <!--<li></li>
+                            <li></li>
+                            <li></li>
+                            <li class="active"></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>-->
+                        </ul>
+                        <div class="reference">
+                            <div class="item">
+                                <div class="colorChoice"></div>
+                                <div class="choice">Ваш выбор</div>
+                            </div>
+                            <div class="item">
+                                <div class="colorFree"></div>
+                                <div class="free">Свободно</div>
+                            </div>
+                            <!--<div class="item">
+                                <div class="colorBusy"></div>
+                                <div class="busyReference">Занято</div>
+                            </div>-->
+                        </div>
+                        <div class="selected">
+                            <div class="nameGame">
+                                <p class="name">mystery<span> of pyramid</span></p>
+                                <div class="ageAndTime">
+                                    <div class="ico">
+                                        <img src="static/img/ageIco.png" alt="">
+                                    </div>
+                                    <div class="ico">
+                                        <div class="image">
+                                            <img src="static/img/clockIco.png" alt="">
+                                        </div>
+                                        <p>45 <span>мин</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="locationGame">
+                                <p>чапаева<br>
+                                    <span><img src="static/img/icoPoligonWhite.png" alt=""> горьковская</span>
+                                </p>
+
+                            </div>
+                            <div class="date"  id="dateGame">
+                                <p></p>
+                            </div>
+                            <div class="result" id="resultSelect">
+                                <div class="priceAndQuantity">
+                                    <div class="ico">
+                                        <img src="static/img/quantity.png" alt="">
+                                    </div>
+                                    <div class="ico">
+                                        <img src="static/img/priceIco.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="referentsQuantity" id="referentsQuantity"><span>5</span> &#215; <span id="prcePer">1000</span></p>
+                                <div class="line">
+                                    <img src="static/img/line3.png" alt="">
+                                </div>
+                                <div class="resultPrice" id="resultPrice">
+                                    <p>Итого: 5000</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttonsBlock">
+                            <button class="linkBack">Назад</button>
+                            <button class="linkNext">Продолжить</button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="formPay">
+                            <form action="" method="post">
+                                <div class="inputs">
+                                    <input type="text" placeholder="Ваше имя*" name="name" id="confirmBookingName" required>
+                                    <div class="lineForm"></div>
+                                    <input type="tel" placeholder="Телефон*"  id="confirmBookingPhone" name="phone" required>
+                                    <div class="lineForm"></div>
+                                    <input type="email" placeholder="E-mail*" id="confirmBookingEmail" name="mail" required>
+                                    <div class="lineForm"></div>
+                                    <input type="text" placeholder="Примечания" name="notes">
+                                    <div class="lineForm"></div>
+                                    <input type="text" placeholder="Промокод" name="promo">
+                                    <div class="lineForm"></div>
+                                </div>
+                                <div class="policy">
+                                    <p>я согласен с условиями публичной оферты</p>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="selected">
+                            <div class="nameGame">
+                                <p class="name">mystery<span> of pyramid</span></p>
+                                <div class="ageAndTime">
+                                    <div class="ico">
+                                        <img src="static/img/ageIco.png" alt="">
+                                    </div>
+                                    <div class="ico">
+                                        <div class="image">
+                                            <img src="static/img/clockIco.png" alt="">
+                                        </div>
+                                        <p>45 <span>мин</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="locationGame">
+                                <p>чапаева<br>
+                                    <span><img src="static/img/icoPoligonWhite.png" alt=""> 1горьковская</span>
+                                </p>
+                            </div>
+                            <div class="date" id="dateGame2">
+                                <p></p>
+                            </div>
+                            <div class="result">
+                                <div class="priceAndQuantity">
+                                    <div class="ico">
+                                        <img src="static/img/quantity.png" alt="">
+                                    </div>
+                                    <div class="ico">
+                                        <img src="static/img/priceIco.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="referentsQuantity" id="referentsQuantity2"><span>5</span> &#215; <span id="prcePer2">1000</span></p>
+                                <div class="line">
+                                    <img src="static/img/line3.png" alt="">
+                                </div>
+                                <div class="resultPrice">
+                                    <p>Итого: 5000</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttonsBlock">
+                            <button class="linkBack">Назад</button>
+                            <button class="linkNext" id="bookthis" onclick="bookApi(this)" arrayid="">Продолжить</button>
+                        </div>
+                    </div>
+                    <!--<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div class="btnBlock">
+                            <button class="active">100% оплата онлайн</button>
+                            <button>25% (с доплатой на месте)</button>
+                        </div>
+                        <form class="creditly-card-form">
+                            <section class="creditly-wrapper">
+                                <div class="credit-card-wrapper">
+                                    <div class="wrapperInputLeft">
+                                        <div class="controls">
+                                            <label class="control-label">Номер карты</label>
+                                            <input class="credit-card-number form-control"
+                                                   type="text" name="number"
+                                                   pattern="(\d*\s){3}\d*"
+                                                   inputmode="numeric" autocomplete="cc-number"
+                                                   autocompletetype="cc-number" x-autocompletetype="cc-number"
+                                                   placeholder="0000 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0000 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0000 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0000">
+                                        </div>
+                                        <div class="controls">
+                                            <input class="expiration-month-and-year form-control"
+                                                   type="text" name="expiration-month-and-year"
+                                                   placeholder="MM / YY">
+                                        </div>
+                                        <div class="controls">
+                                            <label class="control-label">Имя владельца</label>
+                                            <input class="billing-address-name form-control"
+                                                   type="text" name="name"
+                                                   placeholder="John Smith">
+                                        </div>
+                                        <div class="controls">
+                                            <label class="control-label">E-mail</label>
+                                            <input class="billing-address-name form-control"
+                                                   type="text" name="mail">
+                                        </div>
+                                    </div>
+                                    <div class="wrapperInputRight">
+                                        <div class="controls">
+                                            <label class="control-label">CVV/CVC</label>
+                                            <input class="security-code form-control" ·
+                                                   inputmode="numeric"
+                                                   pattern="\d*"
+                                                   type="text" name="security-code"
+                                                   placeholder="*&nbsp;*&nbsp;*">
+                                        </div>
+                                    </div>
+                                    <div class="card-type"></div>
+                                </div>
+                            </section>
+                            <div class="policy">
+                                <p>Безопасный платеж Онлайн платеж банковской картой<br>
+                                    защищен 128-битным шифрованием по технологии Thawte.</p>
+                            </div>
+                        </form>
+                        <div class="selected">
+                            <div class="nameGame">
+                                <p class="name">mystery<span> of pyramid</span></p>
+                                <div class="ageAndTime">
+                                    <div class="ico">
+                                        <img src="static/img/ageIco.png" alt="">
+                                    </div>
+                                    <div class="ico">
+                                        <div class="image">
+                                            <img src="static/img/clockIco.png" alt="">
+                                        </div>
+                                        <p>45 <span>мин</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="locationGame">
+                                <p>чапаева<br>
+                                    <span><img src="static/img/icoPoligonWhite.png" alt=""> горьковская</span>
+                                </p>
+
+                            </div>
+                            <div class="date">
+                                <p>30 марта в 10:00</p>
+                            </div>
+                            <div class="information">
+                                <p><span>имя покупателя, </span><span>почта@gmail.com, </span><span>89119119999</span>
+                                </p>
+                                <p class="prepayment">Предоплата он-лайн резерва №19/0257. Заказ № 2576</p>
+                            </div>
+                            <div class="result">
+                                <div class="priceAndQuantity">
+                                    <div class="ico">
+                                        <img src="static/img/quantity.png" alt="">
+                                    </div>
+                                    <div class="ico">
+                                        <img src="static/img/priceIco.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="referentsQuantity">5 &#215; 1000 </p>
+                                <div class="line">
+                                    <img src="static/img/line3.png" alt="">
+                                </div>
+                                <div class="resultPrice">
+                                    <p>Итого: 5000</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttonsBlock">
+                            <button class="linkBack">Назад</button>
+                            <button class="linkNext">Купить</button>
+                        </div>
+                        <div class="policyCard">
+                            <p>Совершая ввод карточных данных, убедитесь что ознакомились с <a href="#">политикой
+                                безопасности</a> нашего платежного шлюза
+                                <a href="#">Payler</a>.
+                                Мы несем ответственность за безопасную обработку платежа в соответствии со стандартами
+                                безопасности международных платежных систем
+                                <a href="#">(Сертификат PCI DSS 3.2)</a>.
+                                <br>
+                                <br>
+                                ©2019 Payer</p>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/jquery-ui.min.js"></script>
+<script src="static/js/jquery.ui.touch-punch.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="static/js/manifest.js?70af1ecbef4a66a004a7"></script>
+<script src="static/js/vendor.js?31f502c6ee45aceff49b"></script>
+<script src="static/js/app.js?185d4c116a41825d3525"></script>
+<script src="static/js/fancybox.js"></script>
+<script src="static/js/flatpickr.js"></script>
+<script type="text/javascript" src="static/js/creditly.js"></script>
+<script type="text/javascript" src="https://var-vision.com/Scripts/moment.js"></script>
+
+<script src="static/js/custom.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+form.sending {
+    position: relative;
+    opacity: .5;
+    pointer-events: none;
+}
+
+form {
+    transition: opacity .3s;
+}
+
+.success-message {
+    display: none;
+}
+
+.question {
+    display: none;
+}
+
+.flatpickr {
+    border: 1px solid #8AD9F2;
+    text-align: center;
+}
+
+.contacts__map {
+    filter: grayscale(100%) invert(82%);
+}
+.partners__img{
+    max-width: 110px!important;
+}
+
+#pay {
+    width: auto;
+    padding: 0;
+}
+#pay .fancybox-close-small svg {
+    display: none;
+}
+#pay .fancybox-close-small {
+    background: url("../../static/img/clloseBtn.png") no-repeat;
+    background-size: cover;
+    right: 85px;
+    top: 75px;
+}
