@@ -32,7 +32,7 @@ $(document).ready(function() {
 
 function getRooms(city) {
 
-    $("#poligonsgames").html("");
+    // $("#poligonsgames").html("");
 
         $.ajax({
             type: "GET",
@@ -41,17 +41,14 @@ function getRooms(city) {
             //data: "caturl=" + caturl + "&typeid=" + typeid + "&count=" + count,
             dataType: "json",
             success: function (data) {
-                var datatext = '<td>Игра</td>';
-
-                $("#reservationTime").append('<table>\n' +
-                    '                                        <tr>');
+                var datatext = '';
 
                 $.each(data[0].Rooms, function (index, value) {
                    $.each(value.Games, function (index, secondValue) {
                        // test = secondValue.split(' ');
                        // namegame = '<span>'+test.join('</span><br><span>')+'</span>';
-                       datatext +='<td>\n' +
-                           '<button onclick="selectGame('+value.Id+')" id="gameid_'+value.Id+'">'+secondValue+'</button>\n' + '</td>';
+                       datatext +='<li class="poligons-list__item">\n' +
+                           '<button class="poligons__btn" onclick="selectGame('+value.Id+')" id="gameid_'+value.Id+'"><p class="poligons__name games__name">'+secondValue+'</p></button>' + '</li>';
                    })
                 });
 
@@ -62,11 +59,13 @@ function getRooms(city) {
       // '<button onclick="selectGame('+value.Id+');" id="gameid_'+value.Id+'">'+namegame+'</button>\n' + '</td>';
       //           });
 
-$('#poligonsgames').show();
+                var gamesList = $("#games__list");
 
-                $("#poligonsgames").append(datatext);
+                gamesList.html(datatext);
+                gamesList.owlCarousel('destroy');
+                gamesList.owlCarousel();
 
-
+                $('#poligonsgames').removeClass('games--hide');
             }
         });
 }
@@ -75,7 +74,7 @@ function selectPoint(pointId) {
     //отправляем запрос на api
 
     $('#pointId').val(pointId);
-    $('#poligons button').removeClass('activepoint');
+    $('#poligons .poligons__btn').removeClass('activepoint');
     $('#poligon_'+pointId).addClass('activepoint');
 
     getRooms('Санкт-Петербург');
