@@ -118,57 +118,6 @@
         <div class="wrapperSlider">
             <div class="oneWindow">
                 <div class="cross"><img src="static/img/cross.png" alt=""></div>
-<!--                <table>-->
-<!--                    <tr class="poligons" id="poligons">-->
-<!--                        <td>Полигон</td>-->
-<!--                        <td>-->
-<!--                            <button onclick="selectPoint(1);" id="poligon_1">-->
-<!--                                <span>чапаева</span>-->
-<!--                                <br>-->
-<!--                                <span><img src="static/img/icoPoligon.png" alt="">Горьковская</span>-->
-<!--                            </button>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <button onclick="selectPoint(2);" id="poligon_2">-->
-<!--                                <span>Попова</span>-->
-<!--                                <br>-->
-<!--                                <span><img src="static/img/icoPoligon.png" alt="">Петроградская</span>-->
-<!--                            </button>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <button onclick="selectPoint(3);" id="poligon_3">-->
-<!--                                <span>Ломоносова</span>-->
-<!--                                <br>-->
-<!--                                <span><img src="static/img/icoPoligon.png" alt="">Елизаровская</span>-->
-<!--                            </button>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr class="games" id="poligonsgames" style="display: none;">-->
-<!--                        <td>Игра</td>-->
-<!--                        <td>-->
-<!--                            <button onclick="selectGame(1);">-->
-<!--                                <span>mystery</span>-->
-<!--                                <br>-->
-<!--                                <span>of pyramid</span>-->
-<!--                            </button>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <button onclick="selectGame(2);">-->
-<!--                                <span>ENEMALS</span>-->
-<!--                                <br>-->
-<!--                                &lt;!&ndash;<span>др игры</span>&ndash;&gt;-->
-<!--                            </button>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <button onclick="selectGame(3);">-->
-<!--                                <span>Playstation</span>-->
-<!--                                <br>-->
-<!--                                <span>PRO</span>-->
-<!--                            </button>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-
-<!--                </table>-->
                 <div class="poligon-games">
                     <div class="poligons" id="poligons">
                         <span class="poligons__title">Полигон</span>
@@ -528,7 +477,7 @@
                     </div>
                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <div class="formPay">
-                            <form action="" method="post">
+                            <form action="" method="post" novalidate>
                                 <div class="inputs">
                                     <input type="text" placeholder="Ваше имя*" name="name" id="confirmBookingName" required>
                                     <div class="lineForm"></div>
@@ -597,58 +546,59 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <div class="btnBlock">
-                            <button class="active">100% оплата онлайн</button>
+                        <div class="btnBlock methods-pay">
+                            <button class="active full-pay">100% оплата онлайн</button>
                             <button>25% (с доплатой на месте)</button>
                         </div>
-                        <form class="creditly-card-form">
-                            <section class="creditly-wrapper">
-                                <div class="credit-card-wrapper">
-                                    <div class="wrapperInputLeft">
-                                        <div class="controls">
-                                            <label class="control-label">Номер карты</label>
-                                            <input class="credit-card-number form-control"
-                                                   type="text" name="number"
-                                                   pattern="(\d*\s){3}\d*"
-                                                   inputmode="numeric" autocomplete="cc-number"
-                                                   autocompletetype="cc-number" x-autocompletetype="cc-number"
-                                                   placeholder="0000 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0000 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0000 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0000">
-                                        </div>
-                                        <div class="controls">
-                                            <input class="expiration-month-and-year form-control"
-                                                   type="text" name="expiration-month-and-year"
-                                                   placeholder="MM / YY">
-                                        </div>
-                                        <div class="controls">
-                                            <label class="control-label">Имя владельца</label>
-                                            <input class="billing-address-name form-control"
-                                                   type="text" name="name"
-                                                   placeholder="John Smith">
-                                        </div>
-                                        <div class="controls">
-                                            <label class="control-label">E-mail</label>
-                                            <input class="billing-address-name form-control"
-                                                   type="text" name="mail">
-                                        </div>
-                                    </div>
-                                    <div class="wrapperInputRight">
-                                        <div class="controls">
-                                            <label class="control-label">CVV/CVC</label>
-                                            <input class="security-code form-control" ·
-                                                   inputmode="numeric"
-                                                   pattern="\d*"
-                                                   type="text" name="security-code"
-                                                   placeholder="*&nbsp;*&nbsp;*">
-                                        </div>
-                                    </div>
-                                    <div class="card-type"></div>
-                                </div>
-                            </section>
-                            <div class="policy">
-                                <p>Безопасный платеж Онлайн платеж банковской картой<br>
-                                    защищен 128-битным шифрованием по технологии Thawte.</p>
-                            </div>
-                        </form>
+                        <a href="#" id="go-to-pay">Перейти к оплате</a>
+                        <!--<form class="creditly-card-form">-->
+                            <!--<section class="creditly-wrapper">-->
+                                <!--<div class="credit-card-wrapper">-->
+                                    <!--<div class="wrapperInputLeft">-->
+                                        <!--<div class="controls">-->
+                                            <!--<label class="control-label">Номер карты</label>-->
+                                            <!--<input class="credit-card-number form-control"-->
+                                                   <!--type="text" name="number"-->
+                                                   <!--pattern="(\d*\s){3}\d*"-->
+                                                   <!--inputmode="numeric" autocomplete="cc-number"-->
+                                                   <!--autocompletetype="cc-number" x-autocompletetype="cc-number"-->
+                                                   <!--placeholder="0000 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0000 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0000 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0000">-->
+                                        <!--</div>-->
+                                        <!--<div class="controls">-->
+                                            <!--<input class="expiration-month-and-year form-control"-->
+                                                   <!--type="text" name="expiration-month-and-year"-->
+                                                   <!--placeholder="MM / YY">-->
+                                        <!--</div>-->
+                                        <!--<div class="controls">-->
+                                            <!--<label class="control-label">Имя владельца</label>-->
+                                            <!--<input class="billing-address-name form-control"-->
+                                                   <!--type="text" name="name"-->
+                                                   <!--placeholder="John Smith">-->
+                                        <!--</div>-->
+                                        <!--<div class="controls">-->
+                                            <!--<label class="control-label">E-mail</label>-->
+                                            <!--<input class="billing-address-name form-control"-->
+                                                   <!--type="text" name="mail">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="wrapperInputRight">-->
+                                        <!--<div class="controls">-->
+                                            <!--<label class="control-label">CVV/CVC</label>-->
+                                            <!--<input class="security-code form-control" ·-->
+                                                   <!--inputmode="numeric"-->
+                                                   <!--pattern="\d*"-->
+                                                   <!--type="text" name="security-code"-->
+                                                   <!--placeholder="*&nbsp;*&nbsp;*">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="card-type"></div>-->
+                                <!--</div>-->
+                            <!--</section>-->
+                            <!--<div class="policy">-->
+                                <!--<p>Безопасный платеж Онлайн платеж банковской картой<br>-->
+                                    <!--защищен 128-битным шифрованием по технологии Thawte.</p>-->
+                            <!--</div>-->
+                        <!--</form>-->
                         <div class="selected">
                             <div class="nameGame">
                                 <p class="name">mystery<span> of pyramid</span></p>
