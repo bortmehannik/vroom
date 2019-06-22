@@ -121,7 +121,7 @@ body {
 .pay .wrapperSlider .oneWindow table .games button {
   color: #2ab9d1;
   font-size: 18px;
-  line-height: 14.06px;
+  line-height: 20px;
   text-transform: uppercase;
   text-align: left;
   outline: none; }
@@ -255,7 +255,7 @@ body {
   font-weight: 500;
   line-height: 32.11px;
   text-transform: uppercase;
-  margin-left: 70px;
+  text-align: center;
   margin-bottom: 0; }
 .pay .wrapperSlider .twoWindow .tab-content .tab-pane .ui-widget-content {
   background: url("../../static/img/lineSlider.png") center center no-repeat;
@@ -277,15 +277,24 @@ body {
   display: flex;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
-  justify-content: space-between;
-  width: 103%;
   margin-top: 10px;
   color: #24b9d1;
   font-family: "Gotham Pro Medium", sans-serif;
   font-size: 18px;
-  text-transform: uppercase; }
-.pay .wrapperSlider .twoWindow .tab-content .tab-pane .number span:nth-child(2) {
-  margin-left: -38px; }
+  text-transform: uppercase;
+  height: 27px;
+  justify-content: center;
+  position: relative;
+}
+.slider-values {
+  position: absolute;
+}
+.slider-values:first-child {
+  left: 0;
+}
+.slider-values:last-child {
+  right: 0;
+}
 .pay .wrapperSlider .twoWindow .tab-content .tab-pane .inputsCommands {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -611,7 +620,7 @@ body {
 .pay .wrapperSlider .twoWindow .tab-content .tab-pane .selected .nameGame .name {
   color: #ffffff;
   font-family: "Gotham Pro Medium", sans-serif;
-  font-size: 22px;
+  font-size: 17px;
   text-transform: uppercase;
   margin-bottom: 0;
   margin-top: -5px; }
@@ -638,6 +647,14 @@ body {
   text-transform: uppercase;
   line-height: 19.82px;
   margin-bottom: 0; }
+
+.pay .wrapperSlider .twoWindow .tab-content .tab-pane .selected .locationGame p span:first-of-type {
+  font-family: "Gotham Pro Medium", sans-serif;
+  font-size: 17px;
+}
+.pay .wrapperSlider .twoWindow .tab-content .tab-pane .selected .locationGame p span:last-child {
+  font-size: 13px;
+}
 .pay .wrapperSlider .twoWindow .tab-content .tab-pane .selected .locationGame p span {
   font-family: "Gotham Pro Regular", sans-serif;
   font-size: 15px; }

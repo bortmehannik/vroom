@@ -1,55 +1,66 @@
 var test2Result;
-
+var countPeople;
+var leftPlayers = false;
+var name;
+var phone;
+var mail;
 function selectGame(gameId) {
-    jQuery('#gameId').val(gameId);
+    $('#gameId').val(gameId);
 
-    jQuery('#poligonsgames button').removeClass('activepoint');
-    jQuery('#gameid_'+gameId).addClass('activepoint');
-    jQuery('#step1').removeAttr('disabled');
+    $('#poligonsgames button').removeClass('activepoint');
+    $('#gameid_'+gameId).addClass('activepoint');
+    $('#step1').removeAttr('disabled');
     /*   $('.oneWindow').slideUp('slow', function () {
            $('.twoWindow').slideDown('slow');
        });*/
 
     // getGameInfo();
-
 }
+
+
+$(document).ready(function() {
+
+    // getRooms('Санкт-Петербург');
+    $('.inputsCommands label').click(function() {
+        if ($(this).attr('for') == 'own') {
+            leftPlayers = false;
+        } else {
+            leftPlayers = true;
+        }
+    });
+});
 
 function getRooms(city) {
 
     $("#poligonsgames").html("");
 
-        jQuery.ajax({
+        $.ajax({
             type: "GET",
-            // url: "http://var-vision.com/Api/Booking/GetGamePointsAndRoomsForCity?city="+city,
-            url: "/test1.php?city="+city,
+            url: "http://var-vision.com/Api/Booking/GetGamePointsAndRoomsForCity?city="+city,
+            // url: "/test1.php?city="+city,
             //data: "caturl=" + caturl + "&typeid=" + typeid + "&count=" + count,
             dataType: "json",
             success: function (data) {
                 var datatext = '<td>Игра</td>';
 
-                //jquery part
-               //clean
                 $("#reservationTime").append('<table>\n' +
                     '                                        <tr>');
 
-                console.log(data[0].Rooms);
-
-                $.each(data[0].Rooms, function (index) {
-                    $.each(data[0].Rooms[index], function (index, value) {
-
-                    });
+                $.each(data[0].Rooms, function (index, value) {
+                   $.each(value.Games, function (index, secondValue) {
+                       // test = secondValue.split(' ');
+                       // namegame = '<span>'+test.join('</span><br><span>')+'</span>';
+                       datatext +='<td>\n' +
+                           '<button onclick="selectGame('+value.Id+')" id="gameid_'+value.Id+'">'+secondValue+'</button>\n' + '</td>';
+                   })
                 });
 
-
-                $.each(data[0].Rooms, function(index, value){
-                    // console.log(index);
-                    // console.log(value.Name);
-                    test = value.Name.split(' ');
-                    namegame = '<span>'+test.join('</span><br><span>')+'</span>';
-                    // console.log(namegame);
-                    datatext +='<td>\n' +
-      ' <button onclick="selectGame('+value.Id+');" id="gameid_'+value.Id+'">'+namegame+'</button>\n' +                        '                        </td>';
-                });
+      //           $.each(data[0].Rooms, function(index, value){
+      //               test = value.Name.split(' ');
+      //               namegame = '<span>'+test.join('</span><br><span>')+'</span>';
+      //               datatext +='<td>\n' +
+      // '<button onclick="selectGame('+value.Id+');" id="gameid_'+value.Id+'">'+namegame+'</button>\n' + '</td>';
+      //           });
 
 $('#poligonsgames').show();
 
@@ -60,18 +71,12 @@ $('#poligonsgames').show();
         });
 }
 
-$(document).ready(function() {
-
-   getRooms('Санкт-Петербург');
-
-});
-
 function selectPoint(pointId) {
     //отправляем запрос на api
 
-    jQuery('#pointId').val(pointId);
-    jQuery('#poligons button').removeClass('activepoint');
-    jQuery('#poligon_'+pointId).addClass('activepoint');
+    $('#pointId').val(pointId);
+    $('#poligons button').removeClass('activepoint');
+    $('#poligon_'+pointId).addClass('activepoint');
 
     getRooms('Санкт-Петербург');
 }
@@ -80,16 +85,30 @@ $(document).ready(function () {
 
 
     $('.btnNext button').click(function () {
-        var gameId = jQuery('#gameId').val();
-        var gamePointId = jQuery('#pointId').val();
+        var gameId = $('#gameId').val();
+        var gamePointId = $('#pointId').val();
+        var gameName = '';
+        var poligonName = '';
+        $.each($('tr.games td'), function() {
+            if ($(this).children('button').hasClass('activepoint')) {
+                gameName = $(this).text();
+            }
+        });
+        $.each($('tr.poligons td'), function() {
+           if ($(this).children('button').hasClass('activepoint')) {
+               poligonName = $(this).children('button').children().clone();
+           }
+        });
+        $('.locationGame p').html(poligonName);
+        $('.nameGame > p').text(gameName);
         if (gameId != 0 && gamePointId != 0) {
             $('.oneWindow').slideUp('slow', function () {
                 $('.twoWindow').slideDown('slow');
             });
             Data = new Date();
-            jQuery('#day').val(Data.getDate());
-            jQuery('#resultSelect').hide();
-            jQuery('#gamemonth').val(Data.getMonth()+1);
+            $('#day').val(Data.getDate());
+            // $('#resultSelect').hide();
+            $('#gamemonth').val(Data.getMonth()+1);
             createMonth(Data.getMonth(), Data.getFullYear());
             createDateDay(Data.getDay(), Data.getMonth(),Data.getDate());
             createCalendar(2019, 5);
@@ -122,7 +141,7 @@ function createMonth(month,year) {
         case 11: fMonth="декабрь"; break;
     }
 
-    jQuery('#month').html("").append(fMonth+' '+year);
+    $('#month').html("").append(fMonth+' '+year);
 }
 
 function createDateDay(wday,month,day) {
@@ -153,7 +172,7 @@ function createDateDay(wday,month,day) {
         case 11: fMonth="декабря"; break;
     }
 
-    jQuery('#selectDateDay').html("").append(weekday[wday]+" "+day+" "+fMonth);
+    $('#selectDateDay').html("").append(weekday[wday]+" "+day+" "+fMonth);
 }
 
 
@@ -182,15 +201,15 @@ function createDateDay2(month,day) {
 
 
 function selectDay(day) {
-    jQuery( ".myBorder a" ).removeClass( "active" );
-    jQuery('#day_'+day).addClass('active');
-    jQuery('#day').val(day);
+    $( ".myBorder a" ).removeClass( "active" );
+    $('#day_'+day).addClass('active');
+    $('#day').val(day);
 
-    var date = new Date('2019-'+jQuery('#gamemonth').val()+'-'+day);
+    var date = new Date('2019-'+$('#gamemonth').val()+'-'+day);
     //var time = date.getTime() +  60 * 60 * 24 * 1000;
 
 
-    jQuery('#selectDateDay').html('').append(createDateDay(date.getDay(),jQuery('#gamemonth').val(),day));
+    $('#selectDateDay').html('').append(createDateDay(date.getDay(),$('#gamemonth').val(),day));
 
     getGameInfo();
 }
@@ -201,7 +220,7 @@ function createCalendar(year, month) {
     var d = new Date(year, mon);
 
     Data = new Date();
-    Day =  jQuery('#day').val();
+    Day =  $('#day').val();
     Month = Data.getMonth();
     NextMonth = month+1;
     PrevMonth = month-1;
@@ -251,20 +270,20 @@ else{
 
     // только одно присваивание innerHTML
     //elem.innerHTML = table;
-/*    jQuery('#calendarDots').html('').append('<li></li>\n' +
+/*    $('#calendarDots').html('').append('<li></li>\n' +
         '                            <li></li>\n' +
         '                            <li></li>\n' +
         '                            <li class="active"></li>\n' +
         '                            <li><a href="" onclick="createCalendar(2019, 6)"></a></li>\n' +
         '                            <li></li>\n' +
         '                            <li></li>');*/
-    jQuery('.calendar').html('').append(table);
-    jQuery('#reservationTime').empty();
+    $('.calendar').html('').append(table);
+    $('#reservationTime').empty();
     //
 }
 
 function createCalendar1(year, month) {
-    jQuery('#selectDateDay').empty();
+    $('#selectDateDay').empty();
     createCalendar(year, month);
 }
 
@@ -303,7 +322,7 @@ function bookApi(btn) {
                 GameId: $(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.GameId,
                 RoomId: $(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.RoomId,
                 StartTime: moment($(this)[0].BookingRoomOptionModel.PricingSlotModel.StartTime).format(),
-                OccupyAllRoom: (jQuery('input[name=command]:checked').val())
+                OccupyAllRoom: ($('input[name=command]:checked').val())
             };
             bookingRoomModels.push(bookingRoomModel);
         });
@@ -339,15 +358,15 @@ function timeButtonClick(btn) {
 
     var arrayId = $(btn).attr('arrayid');
     var obj = test2Result[arrayId];
-    jQuery('#resultSelect').show();
-    $('#referentsQuantity span').html('').append(jQuery('#contentSlider1').val());
-    jQuery( ".myBorder a" ).removeClass( "active" );
-    jQuery('[arrayid="'+arrayId+'"]').addClass('active');
+    $('#resultSelect').show();
+    $('#referentsQuantity span').html('').append($('#contentSlider1').val());
+    $( ".myBorder a" ).removeClass( "active" );
+    $('[arrayid="'+arrayId+'"]').addClass('active');
     $("#result-tickets").html(""); //clean
     $('#result-tickets').append("<p> Start time is <b>" +
         obj[0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted +
         "</b></p>");
-    var leftPlayers = jQuery('input[name=command]:checked').val();
+    var leftPlayers = $('input[name=command]:checked').val();
     /*var leftPlayersBool = (leftPlayers.toUpperCase() === "TRUE");
     $('#result-tickets').append("<p> Left players: <b>" +
         leftPlayers +
@@ -364,20 +383,20 @@ function timeButtonClick(btn) {
                 totalCost = allRoomCost;
             }
             allOrderPrice += totalCost;
-            $('#dateGame p').html('').append(createDateDay2(jQuery('#gamemonth').val(), jQuery('#day').val())+' в ' +
+            $('#dateGame p').html('').append(createDateDay2($('#gamemonth').val(), $('#day').val())+' в ' +
                 $(this)[0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted);
 
 
             $('#prcePer').html('').append($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer);
-            $('#resultPrice p').html('').append('Итого: '+($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer * jQuery('#contentSlider1').val()));
+            $('#resultPrice p').html('').append('Итого: '+($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer * $('#contentSlider1').val()));
 
 
-            $('#dateGame2 p').html('').append(createDateDay2(jQuery('#gamemonth').val(), jQuery('#day').val())+' в ' +
+            $('#dateGame2 p').html('').append(createDateDay2($('#gamemonth').val(), $('#day').val())+' в ' +
                 $(this)[0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted);
 
 
             $('#prcePer2').html('').append($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer);
-            $('#resultPrice2 p').html('').append('Итого: '+($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer * jQuery('#contentSlider1').val()));
+            $('#resultPrice2 p').html('').append('Итого: '+($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer * $('#contentSlider1').val()));
 
             $('#bookthis').attr('arrayid',arrayId);
 
@@ -390,23 +409,23 @@ function timeButtonClick(btn) {
 
 function getGameInfo() {
 
-    var leftPlayers = jQuery('input[name=command]:checked').val();
-    var gameId = jQuery('#gameId').val();
-    var gamePointId = jQuery('#pointId').val();
-    var amount = jQuery('#contentSlider1').val();
+    var leftPlayers = $('input[name=command]:checked').val();
+    var gameId = $('#gameId').val();
+    var gamePointId = $('#pointId').val();
+    var amount = $('#contentSlider1').val();
 
     //отправляем запрос для получения кучи инфы
     Data = new Date();
     Year = Data.getFullYear();
-    Month = jQuery('#gamemonth').val();
-    Day = jQuery('#day').val();
+    Month = $('#gamemonth').val();
+    Day = $('#day').val();
 
 
 
 
 
 
-    jQuery.ajax({
+    $.ajax({
         type: "GET",
         // url: "/test.php?gamePointId=1&gameId=" + gameId + "&datetime=" + Year + "-" + Month + "-" + Day + "&leftPlayers=" + leftPlayers + "&playersNumber=5",
         url: "/test.php?gamePointId=" + gamePointId + "&gameId=" + gameId + "&datetime=" + Year + "-" + Month + "-" + Day + "&endTime=" + Year + "-" + Month + "-" + Day + "&leftPlayers=" + leftPlayers + "&playersNumber="+amount,
@@ -779,15 +798,15 @@ $(function () {
         step : 1,//Шаг, с которым будет двигаться ползунок
         create: function( event, ui ) {
             val = $( "#polzunok" ).slider("value");//При создании слайдера, получаем его значение в перемен. val
-            $( "#contentSlider" ).html( val );//Заполняем этим значением элемент с id contentSlider
+           $( "#contentSlider" ).html( val );//Заполняем этим значением элемент с id contentSlider
             $( "#contentSlider1" ).val( val );
 
         },
         slide: function( event, ui ) {
-            $( "#contentSlider" ).html( ui.value );//При изменении значения ползунка заполняем элемент с id contentSlider
-            $( "#contentSlider1" ).val( ui.value );
-
-
+            countPeople = ui.value;
+            $( "#contentSlider" ).html( countPeople );//При изменении значения ползунка заполняем элемент с id contentSlider
+            $( "#contentSlider1" ).val( countPeople );
+            $('.referentsQuantity span:first-child').text(countPeople);
         }
     });
 
@@ -899,6 +918,21 @@ $(function () {
         $('#nav-contact-tab').addClass('active');
         $('#nav-profile').removeClass('show active');
         $('#nav-contact').addClass('show active');
+        // $('.formPay input').each(function() {
+        //     if ($(this).attr(name) == 'name') {
+        //         this.name = $(this).val();
+        //     } else if ($(this).attr(phone) == 'phone') {
+        //         this.phone = $(this).val();
+        //     } else if ($(this).attr(mail) == 'mail') {
+        //         this.mail = $(this).val();
+        //     }
+        // });
+        this.name = $(".formPay input[name='name']").val();
+        this.phone = $(".formPay input[name='phone']").val();
+        this.mail = $(".formPay input[name='mail']").val();
+        $('.information #name').text(this.name + ', ');
+        $('.information #phone').text(this.phone);
+        $('.information #email').text(this.mail + ', ');
     });
     linkBackContact.on('click', function () {
         $('#nav-contact-tab').removeClass('active');

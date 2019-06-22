@@ -42,7 +42,7 @@
                     <tr class="poligons" id="poligons">
                         <td>Полигон</td>
                         <td>
-                            <button onclick="selectPoint(1);" id="poligon_1" class="activepoint">
+                            <button onclick="selectPoint(1);" id="poligon_1">
                                 <span>чапаева</span>
                                 <br>
                                 <span><img src="static/img/icoPoligon.png" alt="">Горьковская</span>
@@ -101,8 +101,8 @@
                            role="tab" aria-controls="nav-home" aria-selected="true">Игроки/время</a>
                         <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
                            role="tab" aria-controls="nav-profile" aria1-selected="false">Контакты</a>
-                        <!--<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
-                           role="tab" aria-controls="nav-contact" aria-selected="false">Оплата</a>-->
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                           role="tab" aria-controls="nav-contact" aria-selected="false">Оплата</a>
                         <div class="backActive">
                         </div>
                     </div>
@@ -121,8 +121,10 @@
                         <div id="polzunok"></div>
 
                         <div class="number">
+                            <span class="slider-values">1</span>
                             <input id="contentSlider1" type="hidden" value="">
                             <span id="contentSlider"></span>
+                            <span class="slider-values">10</span>
                         </div>
                         <div class="inputsCommands">
                             <input type="radio" name="command" value="True" id="own" checked>
@@ -366,10 +368,7 @@
                                 </div>
                             </div>
                             <div class="locationGame">
-                                <p>чапаева<br>
-                                    <span><img src="static/img/icoPoligonWhite.png" alt=""> горьковская</span>
-                                </p>
-
+                                <p></p>
                             </div>
                             <div class="date"  id="dateGame">
                                 <p></p>
@@ -383,7 +382,7 @@
                                         <img src="static/img/priceIco.png" alt="">
                                     </div>
                                 </div>
-                                <p class="referentsQuantity" id="referentsQuantity"><span>5</span> &#215; <span id="prcePer">1000</span></p>
+                                <p class="referentsQuantity" id="referentsQuantity"><span>1</span> &#215; <span id="prcePer">1000</span></p>
                                 <div class="line">
                                     <img src="static/img/line3.png" alt="">
                                 </div>
@@ -412,8 +411,12 @@
                                     <input type="text" placeholder="Промокод" name="promo">
                                     <div class="lineForm"></div>
                                 </div>
+                                <div class="promo">
+                                    <button>Применить промокод</button>
+                                </div>
                                 <div class="policy">
-                                    <p>я согласен с условиями публичной оферты</p>
+                                    <input type="checkbox" id="policy">
+                                    <label for="policy">я согласен с условиями публичной оферты</label>
                                 </div>
                             </form>
                         </div>
@@ -449,7 +452,7 @@
                                         <img src="static/img/priceIco.png" alt="">
                                     </div>
                                 </div>
-                                <p class="referentsQuantity" id="referentsQuantity2"><span>5</span> &#215; <span id="prcePer2">1000</span></p>
+                                <p class="referentsQuantity" id="referentsQuantity2"><span>1</span> &#215; <span id="prcePer2">1000</span></p>
                                 <div class="line">
                                     <img src="static/img/line3.png" alt="">
                                 </div>
@@ -463,7 +466,7 @@
                             <button class="linkNext" id="bookthis" onclick="bookApi(this)" arrayid="">Продолжить</button>
                         </div>
                     </div>
-                    <!--<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                         <div class="btnBlock">
                             <button class="active">100% оплата онлайн</button>
                             <button>25% (с доплатой на месте)</button>
@@ -541,7 +544,7 @@
                                 <p>30 марта в 10:00</p>
                             </div>
                             <div class="information">
-                                <p><span>имя покупателя, </span><span>почта@gmail.com, </span><span>89119119999</span>
+                                <p><span id="name">имя покупателя, </span><span id="email">почта@gmail.com, </span><span id="phone">89119119999</span>
                                 </p>
                                 <p class="prepayment">Предоплата он-лайн резерва №19/0257. Заказ № 2576</p>
                             </div>
@@ -554,7 +557,7 @@
                                         <img src="static/img/priceIco.png" alt="">
                                     </div>
                                 </div>
-                                <p class="referentsQuantity">5 &#215; 1000 </p>
+                                <p class="referentsQuantity">1 &#215; 1000 </p>
                                 <div class="line">
                                     <img src="static/img/line3.png" alt="">
                                 </div>
@@ -578,7 +581,7 @@
                                 <br>
                                 ©2019 Payer</p>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>
