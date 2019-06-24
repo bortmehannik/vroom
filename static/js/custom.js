@@ -105,13 +105,13 @@ $(document).ready(function () {
             $('.oneWindow').slideUp('slow', function () {
                 $('.twoWindow').slideDown('slow');
             });
-            Data = new Date();
-            $('#day').val(Data.getDate());
+            // Data = new Date();
+            // $('#day').val(Data.getDate());
             // $('#resultSelect').hide();
-            $('#gamemonth').val(Data.getMonth()+1);
-            createMonth(Data.getMonth(), Data.getFullYear());
-            createDateDay(Data.getDay(), Data.getMonth(),Data.getDate());
-            createCalendar(2019, 5);
+            // $('#gamemonth').val(Data.getMonth()+1);
+            // createMonth(Data.getMonth(), Data.getFullYear());
+            // createDateDay(Data.getDay(), Data.getMonth(),Data.getDate());
+            // createCalendar(2019, 5);
 
             getGameInfo();
         }
@@ -419,10 +419,6 @@ function getGameInfo() {
     Year = Data.getFullYear();
     Month = $('#gamemonth').val();
     Day = $('#day').val();
-
-
-
-
 
 
     $.ajax({

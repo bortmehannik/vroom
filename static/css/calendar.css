@@ -1,0 +1,117 @@
+
+.booking-calendar {
+    position: relative;
+    color: #24b9d1;
+    align-items: center;
+}
+
+.booking-calendar::after {
+    content: '';
+    position: absolute;
+    background: url(../../static/img/krest2.png) no-repeat;
+    height: 158px;
+    width: 152px;
+    bottom: -2px;
+    right: 3px;
+    transform: translate(50%, 50%);
+    z-index: -1;
+}
+
+.calendar__control {
+    font-size: 70px;
+    line-height: 1;
+    outline: none;
+    color: inherit;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.calendar__control:focus {
+    outline: none;
+}
+
+.calendar__control--prev {
+    left: -35px;
+}
+
+.calendar__control--next {
+    right: -35px;
+}
+
+.calendar__table {
+    position: relative;
+    width: 100%;
+    margin-bottom: 24px;
+    text-align: center;
+    user-select: none;
+}
+
+.calendar__table thead {
+    text-transform: uppercase;
+}
+
+.calendar__table td {
+    height: 55px;
+    width: 55px;
+    line-height: 1;
+    font-size: 20px;
+    transition: all .25s;
+}
+
+.calendar__table td[data-date] {
+    cursor: pointer;
+    border: 2px solid #24b9d1;
+}
+
+.calendar__table td:hover {
+    color: #fff;
+}
+
+.calendar__table .active {
+    border-color: #972c67;
+    background-color: #972c67;
+    color: #fff;
+    font-size: 24px;
+}
+
+.calendar__month-title {
+    text-align: center;
+    font-size: 24px;
+}
+
+.calendar__current-day {
+    color: red;
+}
+
+@media (max-width: 480px) {
+    .calendar__table td {
+        font-size: 18px;
+        height: 40px;
+        width: 40px;
+    }
+
+    .calendar__table .active {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    .calendar__table {
+        padding: 0 35px;
+    }
+
+    .calendar__control {
+        font-size: 50px;
+        top: -10px;
+        transform: none;
+    }
+
+    .calendar__control--prev {
+        left: 0;
+    }
+
+    .calendar__control--next {
+        right: 0;
+    }
+}
