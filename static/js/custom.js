@@ -61,12 +61,18 @@ function getRooms(city) {
             success: function (data) {
                 var datatext = '';
 
+                var gamesBtns = $('#poligonsgames .poligons__btn');
+                var gamesPrev = $('#poligonsgames .poligons__prev');
+                var gamesNext = $('#poligonsgames .poligons__next');
+
+                console.log(gamesBtns);
+
                 $.each(data[0].Rooms, function (index, value) {
                    $.each(value.Games, function (index, secondValue) {
                        // test = secondValue.split(' ');
                        // namegame = '<span>'+test.join('</span><br><span>')+'</span>';
-                       datatext +='<li class="poligons-list__item">\n' +
-                           '<button class="poligons__btn" onclick="selectGame('+value.Id+')" id="gameid_'+value.Id+'"><p class="poligons__name games__name">'+secondValue+'</p></button>' + '</li>';
+                       datatext +='<div class="poligons-list__item">\n' +
+                           '<button class="poligons__btn" onclick="selectGame('+value.Id+')" id="gameid_'+value.Id+'"><p class="poligons__name games__name">'+secondValue+'</p></button>' + '</div>';
                    })
                 });
 
@@ -81,7 +87,18 @@ function getRooms(city) {
 
                 gamesList.html(datatext);
                 gamesList.owlCarousel('destroy');
-                gamesList.owlCarousel();
+
+                if (gamesBtns.length > 3) {
+                    gamesList.owlCarousel({
+                        nav: true
+                    });
+
+                    gamesPrev.show();
+                    gamesNext.show();
+                } else {
+                    gamesPrev.hide();
+                    gamesNext.hide();
+                }
 
                 $('#poligonsgames').removeClass('games--hide');
             }

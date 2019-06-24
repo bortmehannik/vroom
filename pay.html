@@ -28,6 +28,8 @@
         }
 
         .poligons__title {
+            display: block;
+            flex-shrink: 0;
             width: 165px;
             text-align: center;
             font-family: 'Gotham Pro Medium', sans-serif;
@@ -39,12 +41,35 @@
             box-sizing: border-box;
         }
 
-        .poligons-list {
-            width: 530px;
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
+        .poligons__wrapper {
+            display: flex;
+            align-items: center;
+            margin-left: 30px;
+        }
+
+        .poligons__wrapper .poligons__prev,
+        .poligons__wrapper .poligons__next {
+            display: none;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .poligons__wrapper .poligons__prev {
+            margin-right: 20px;
+        }
+
+        .poligons__wrapper .poligons__next {
             margin-left: 20px;
+        }
+
+        .poligons-list {
+            width: 495px;
+        }
+
+        .poligons-list.without-carousel {
+            display: flex;
+            justify-content: space-between;
         }
 
         .poligons-list__item {
@@ -52,7 +77,6 @@
         }
 
         .poligons__btn {
-            width: 135px;
             color: #2ab9d1;
             font-size: 18px;
             line-height: 14px;
@@ -67,6 +91,14 @@
         .poligons__name {
             font-family: 'Gotham Pro Medium', sans-serif;
             margin-bottom: 0;
+        }
+
+        .poligons__wrapper .owl-nav {
+            display: none;
+        }
+
+        .poligons__wrapper .owl-dots {
+            display: none;
         }
 
         .games__name {
@@ -121,52 +153,60 @@
                 <div class="poligon-games">
                     <div class="poligons" id="poligons">
                         <span class="poligons__title">Полигон</span>
-                        <ul id="poligons__list" class="poligons-list owl-carousel">
-                            <li class="poligons-list__item">
-                                <button class="poligons__btn" onclick="selectPoint(1);" id="poligon_1">
-                                    <p class="poligons__name">чапаева</p>
-                                    <p class="poligons__metro">Горьковская</p>
-                                </button>
-                            </li>
-                            <li class="poligons-list__item">
-                                <button class="poligons__btn" onclick="selectPoint(2);" id="poligon_2">
-                                    <p class="poligons__name">Попова</p>
-                                    <p class="poligons__metro">Петроградская</p>
-                                </button>
-                            </li>
-                            <li class="poligons-list__item">
-                                <button class="poligons__btn" onclick="selectPoint(3);" id="poligon_3">
-                                    <p class="poligons__name">Ломоносова</p>
-                                    <p class="poligons__metro">Елизаровская</p>
-                                </button>
-                            </li>
-                            <li class="poligons-list__item">
-                                <button class="poligons__btn" onclick="selectPoint(4);" id="poligon_4">
-                                    <p class="poligons__name">Савушкина</p>
-                                    <p class="poligons__metro">Беговая</p>
-                                </button>
-                            </li>
-                        </ul>
+                        <div class="poligons__wrapper">
+                            <button class="poligons__prev"><</button>
+                            <div id="poligons__list" class="poligons-list without-carousel">
+                                <div class="poligons-list__item">
+                                    <button class="poligons__btn" onclick="selectPoint(1);" id="poligon_1">
+                                        <p class="poligons__name">чапаева</p>
+                                        <p class="poligons__metro">Горьковская</p>
+                                    </button>
+                                </div>
+                                <div class="poligons-list__item">
+                                    <button class="poligons__btn" onclick="selectPoint(2);" id="poligon_2">
+                                        <p class="poligons__name">Попова</p>
+                                        <p class="poligons__metro">Петроградская</p>
+                                    </button>
+                                </div>
+                                <div class="poligons-list__item">
+                                    <button class="poligons__btn" onclick="selectPoint(3);" id="poligon_3">
+                                        <p class="poligons__name">Ломоносова</p>
+                                        <p class="poligons__metro">Елизаровская</p>
+                                    </button>
+                                </div>
+                                <div class="poligons-list__item">
+                                    <button class="poligons__btn" onclick="selectPoint(4);" id="poligon_4">
+                                        <p class="poligons__name">Савушкина</p>
+                                        <p class="poligons__metro">Беговая</p>
+                                    </button>
+                                </div>
+                            </div>
+                            <button class="poligons__next">></button>
+                        </div>
                     </div>
                     <div class="games games--hide" id="poligonsgames">
                         <span class="poligons__title">Игра</span>
-                        <ul id="games__list" class="poligons-list owl-carousel">
-                            <li class="poligons-list__item">
-                                <button class="poligons__btn">
-                                    <p class="poligons__name">чапаева</p>
-                                </button>
-                            </li>
-                            <li class="poligons-list__item">
-                                <button class="poligons__btn">
-                                    <p class="poligons__name">Попова</p>
-                                </button>
-                            </li>
-                            <li class="poligons-list__item">
-                                <button class="poligons__btn">
-                                    <p class="poligons__name">Ломоносова</p>
-                                </button>
-                            </li>
-                        </ul>
+                        <div class="poligons__wrapper">
+                            <button class="poligons__prev"><</button>
+                            <div id="games__list" class="poligons-list without-carousel">
+                                <div class="poligons-list__item">
+                                    <button class="poligons__btn">
+                                        <p class="poligons__name">чапаева</p>
+                                    </button>
+                                </div>
+                                <div class="poligons-list__item">
+                                    <button class="poligons__btn">
+                                        <p class="poligons__name">Попова</p>
+                                    </button>
+                                </div>
+                                <div class="poligons-list__item">
+                                    <button class="poligons__btn">
+                                        <p class="poligons__name">Ломоносова</p>
+                                    </button>
+                                </div>
+                            </div>
+                            <button class="poligons__next">></button>
+                        </div>
                     </div>
                 </div>
                 <div class="btnNext">
@@ -686,7 +726,41 @@
 <script src="static/js/custom.js"></script>
 <script>
     $(function() {
-        $('#poligons__list, #games__list').owlCarousel();
+        var poligonsList = $('#poligons__list');
+        var poligonsBtns = $('#poligons .poligons__btn');
+        var poligonsPrev = $('#poligons .poligons__prev');
+        var poligonsNext = $('#poligons .poligons__next');
+        var gamesPrev = $('#poligonsgames .poligons__prev');
+        var gamesNext = $('#poligonsgames .poligons__next');
+
+        if (poligonsBtns.length > 3) {
+            poligonsList.removeClass('without-carousel');
+            poligonsList.addClass('owl-carousel');
+
+            $('#poligons__list, #games__list').owlCarousel({
+                nav: true
+            });
+
+            poligonsPrev.on('click', function() {
+                $('#poligons .owl-nav .owl-prev').trigger('click');
+            });
+
+            poligonsNext.on('click', function() {
+                $('#poligons .owl-nav .owl-next').trigger('click');
+            });
+
+            poligonsPrev.show();
+            poligonsNext.show();
+        } else
+            poligonsList.addClass('without-carousel');
+
+        gamesPrev.on('click', function() {
+            $('#poligonsgames .owl-nav .owl-prev').trigger('click');
+        });
+
+        gamesNext.on('click', function() {
+            $('#poligonsgames .owl-nav .owl-next').trigger('click');
+        });
     });
 </script>
 

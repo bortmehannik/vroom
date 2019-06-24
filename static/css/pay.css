@@ -95,7 +95,8 @@ body {
 .pay .wrapperSlider .oneWindow .cross {
   position: absolute;
   top: -95px;
-  left: 90px; }
+  left: 90px;
+  z-index: -1;}
 .pay .wrapperSlider .oneWindow table {
   margin: 0 auto 84px;
   position: relative; }
