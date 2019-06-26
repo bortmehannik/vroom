@@ -34,6 +34,15 @@ $(document).ready(function() {
             leftPlayers = true;
         }
     });
+
+    $('.promo button').click(function() {
+       console.log('Применить промокод');
+       return false;
+    });
+
+    $('.go-to-pay').click(function() {
+       console.log('Перейти к оплате');
+    });
 });
 
 function getRooms(city) {
@@ -107,18 +116,22 @@ $(document).ready(function () {
     $('.btnNext button').click(function () {
         var gameId = $('#gameId').val();
         var gamePointId = $('#pointId').val();
-        $.each($('ul#poligons__list .owl-item'), function() {
+        $.each($('#poligons__list .owl-item'), function() {
             if ($(this).find('button').hasClass('activepoint')) {
                 gameName = $(this).find('button').children().clone();
             }
         });
-        $.each($('ul#games__list .owl-item'), function() {
+        $.each($('#games__list .poligons-list__item'), function() {
             if ($(this).find('button').hasClass('activepoint')) {
                poligonName = $(this).find('button').children().clone();
            }
         });
         $('.locationGame p').html(poligonName);
         $('.nameGame > p').html(gameName);
+
+        console.log(poligonName);
+        console.log(gameName);
+
         if (gameId != 0 && gamePointId != 0) {
             $('.oneWindow').slideUp('slow', function () {
                 $('.twoWindow').slideDown('slow');
@@ -941,25 +954,6 @@ $(function () {
             $('.information #phone').text(this.phone);
             $('.information #email').text(this.mail + ', ');
         }
-        $('#nav-profile-tab').removeClass('active');
-        $('#nav-contact-tab').addClass('active');
-        $('#nav-profile').removeClass('show active');
-        $('#nav-contact').addClass('show active');
-        // $('.formPay input').each(function() {
-        //     if ($(this).attr(name) == 'name') {
-        //         this.name = $(this).val();
-        //     } else if ($(this).attr(phone) == 'phone') {
-        //         this.phone = $(this).val();
-        //     } else if ($(this).attr(mail) == 'mail') {
-        //         this.mail = $(this).val();
-        //     }
-        // });
-        this.name = $(".formPay input[name='name']").val();
-        this.phone = $(".formPay input[name='phone']").val();
-        this.mail = $(".formPay input[name='mail']").val();
-        $('.information #name').text(this.name + ', ');
-        $('.information #phone').text(this.phone);
-        $('.information #email').text(this.mail + ', ');
     });
     linkBackContact.on('click', function () {
         $('#nav-contact-tab').removeClass('active');

@@ -1057,3 +1057,72 @@ body {
   z-index: 1;
   cursor: pointer;
 }
+
+.promo {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.promo button {
+  background: url(../../static/img/btnNextHover.png) center no-repeat;
+  outline: none;
+  text-shadow: 0 0 2px #23bad3;
+  color: #ffffff;
+  line-height: 19.21px;
+  text-transform: uppercase;
+  font-family: 'Gotham Pro Medium', sans-serif;
+  font-size: 12px;
+  width: 191px;
+  height: 54px;
+  z-index: 99;
+  position: relative;
+  -webkit-transition: 0.4s;
+  -o-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.pay .wrapperSlider .twoWindow .tab-content #nav-profile .formPay .inputs input::-webkit-input-placeholder {
+  color: #ffffff;
+  opacity: 0.6;
+}
+.pay .wrapperSlider .twoWindow .tab-content #nav-profile .formPay .inputs input:-moz-placeholder {
+  color: #ffffff;
+  opacity: 0.6;
+}
+.pay .wrapperSlider .twoWindow .tab-content #nav-profile .formPay .inputs input::-moz-placeholder {
+  color: #ffffff;
+  opacity: 0.6;
+}
+.pay .wrapperSlider .twoWindow .tab-content #nav-profile .formPay .inputs input:-ms-input-placeholder {
+  color: #ffffff;
+  opacity: 0.6;
+}
+
+.go-to-pay {
+  background: url(../../static/img/btnNextHover.png) center no-repeat;
+  outline: none;
+  text-shadow: 0 0 2px #23bad3;
+  color: #ffffff;
+  line-height: 19.21px;
+  text-transform: uppercase;
+  font-family: 'Gotham Pro Medium', sans-serif;
+  font-size: 12px;
+  width: 191px;
+  height: 54px;
+  z-index: 99;
+  position: relative;
+  -webkit-transition: 0.4s;
+  -o-transition: 0.4s;
+  transition: 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.go-to-pay:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+
