@@ -15,7 +15,118 @@
     <link rel="stylesheet" href="static/css/pay.css">
     <link rel="stylesheet" href="static/css/jquery-ui.css">
     <link rel="stylesheet" href="static/css/calendar.css">
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
 
+    <style>
+        .poligons,
+        .games {
+            display: flex;
+            padding: 0 10px;
+        }
+
+        .games--hide {
+            opacity: 0;
+        }
+
+        .poligons__title {
+            display: block;
+            flex-shrink: 0;
+            width: 165px;
+            text-align: center;
+            font-family: 'Gotham Pro Medium', sans-serif;
+            color: #2ab9d1;
+            font-size: 18px;
+            line-height: 20px;
+            text-transform: uppercase;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .poligons__wrapper {
+            display: flex;
+            align-items: center;
+            margin-left: 30px;
+        }
+
+        .poligons__wrapper .poligons__prev,
+        .poligons__wrapper .poligons__next {
+            display: none;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .poligons__wrapper .poligons__prev {
+            margin-right: 20px;
+        }
+
+        .poligons__wrapper .poligons__next {
+            margin-left: 20px;
+        }
+
+        .poligons-list {
+            width: 495px;
+        }
+
+        .poligons-list.without-carousel {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .poligons-list__item {
+            padding: 30px 0;
+        }
+
+        .poligons__btn {
+            color: #2ab9d1;
+            font-size: 18px;
+            line-height: 14px;
+            text-transform: uppercase;
+            text-align: left;
+        }
+
+        .poligons__btn:focus {
+            outline: none;
+        }
+
+        .poligons__name {
+            font-family: 'Gotham Pro Medium', sans-serif;
+            margin-bottom: 0;
+        }
+
+        .poligons__wrapper .owl-nav {
+            display: none;
+        }
+
+        .poligons__wrapper .owl-dots {
+            display: none;
+        }
+
+        .games__name {
+            line-height: 1.25;
+        }
+
+        .poligons__metro {
+            position: relative;
+            font-family: 'Gotham Pro Light', sans-serif;
+            font-size: 12px;
+            line-height: 18px;
+            margin: 0;
+            padding-left: 15px;
+        }
+
+        .poligons__metro:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 10px;
+            height: 16px;
+            background-image: url('static/img/icoPoligon.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,58 +150,65 @@
             <div class="wrapperSlider">
                 <div class="oneWindow">
                     <div class="cross"><img src="static/img/cross.png" alt=""></div>
-                    <table>
-                        <tr class="poligons" id="poligons">
-                            <td>Полигон</td>
-                            <td>
-                                <button onclick="selectPoint(1);" id="poligon_1">
-                                    <span>чапаева</span>
-                                    <br>
-                                    <span><img src="static/img/icoPoligon.png" alt="">Горьковская</span>
-                                </button>
-                            </td>
-                            <td>
-                                <button onclick="selectPoint(2);" id="poligon_2">
-                                    <span>Попова</span>
-                                    <br>
-                                    <span><img src="static/img/icoPoligon.png" alt="">Петроградская</span>
-                                </button>
-                            </td>
-                            <td>
-                                <button onclick="selectPoint(3);" id="poligon_3">
-                                    <span>Ломоносова</span>
-                                    <br>
-                                    <span><img src="static/img/icoPoligon.png" alt="">Елизаровская</span>
-                                </button>
-                            </td>
-
-                        </tr>
-                        <tr class="games" id="poligonsgames" style="display: none;">
-                            <td>Игра</td>
-                            <td>
-                                <button onclick="selectGame(1);">
-                                    <span>mystery</span>
-                                    <br>
-                                    <span>of pyramid</span>
-                                </button>
-                            </td>
-                            <td>
-                                <button onclick="selectGame(2);">
-                                    <span>ENEMALS</span>
-                                    <br>
-                                    <!--<span>др игры</span>-->
-                                </button>
-                            </td>
-                            <td>
-                                <button onclick="selectGame(3);">
-                                    <span>Playstation</span>
-                                    <br>
-                                    <span>PRO</span>
-                                </button>
-                            </td>
-                        </tr>
-
-                    </table>
+                    <div class="poligon-games">
+                        <div class="poligons" id="poligons">
+                            <span class="poligons__title">Полигон</span>
+                            <div class="poligons__wrapper">
+                                <button class="poligons__prev"><</button>
+                                <div id="poligons__list" class="poligons-list without-carousel">
+                                    <div class="poligons-list__item">
+                                        <button class="poligons__btn" onclick="selectPoint(1);" id="poligon_1">
+                                            <p class="poligons__name">чапаева</p>
+                                            <p class="poligons__metro">Горьковская</p>
+                                        </button>
+                                    </div>
+                                    <div class="poligons-list__item">
+                                        <button class="poligons__btn" onclick="selectPoint(2);" id="poligon_2">
+                                            <p class="poligons__name">Попова</p>
+                                            <p class="poligons__metro">Петроградская</p>
+                                        </button>
+                                    </div>
+                                    <div class="poligons-list__item">
+                                        <button class="poligons__btn" onclick="selectPoint(3);" id="poligon_3">
+                                            <p class="poligons__name">Ломоносова</p>
+                                            <p class="poligons__metro">Елизаровская</p>
+                                        </button>
+                                    </div>
+                                    <div class="poligons-list__item">
+                                        <button class="poligons__btn" onclick="selectPoint(4);" id="poligon_4">
+                                            <p class="poligons__name">Савушкина</p>
+                                            <p class="poligons__metro">Беговая</p>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="poligons__next">></button>
+                            </div>
+                        </div>
+                        <div class="games games--hide" id="poligonsgames">
+                            <span class="poligons__title">Игра</span>
+                            <div class="poligons__wrapper">
+                                <button class="poligons__prev"><</button>
+                                <div id="games__list" class="poligons-list without-carousel">
+                                    <div class="poligons-list__item">
+                                        <button class="poligons__btn">
+                                            <p class="poligons__name">чапаева</p>
+                                        </button>
+                                    </div>
+                                    <div class="poligons-list__item">
+                                        <button class="poligons__btn">
+                                            <p class="poligons__name">Попова</p>
+                                        </button>
+                                    </div>
+                                    <div class="poligons-list__item">
+                                        <button class="poligons__btn">
+                                            <p class="poligons__name">Ломоносова</p>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="poligons__next">></button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="btnNext">
                         <button disabled="disabled" id="step1">Продолжить</button>
                     </div>
@@ -407,6 +525,7 @@
     <script type="text/javascript" src="https://var-vision.com/Scripts/moment.js"></script>
 
     <script src="static/js/calendar.js"></script>
+    <script src="static/js/owl.carousel.min.js"></script>
 
     <script src="static/js/custom.js"></script>
 
@@ -438,6 +557,42 @@
         });
 
         $(document).ready(() => {
+            var poligonsList = $('#poligons__list');
+            var poligonsBtns = $('#poligons .poligons__btn');
+            var poligonsPrev = $('#poligons .poligons__prev');
+            var poligonsNext = $('#poligons .poligons__next');
+            var gamesPrev = $('#poligonsgames .poligons__prev');
+            var gamesNext = $('#poligonsgames .poligons__next');
+
+            if (poligonsBtns.length > 3) {
+                poligonsList.removeClass('without-carousel');
+                poligonsList.addClass('owl-carousel');
+
+                $('#poligons__list').owlCarousel({
+                    nav: true
+                });
+
+                poligonsPrev.on('click', function() {
+                    $('#poligons .owl-nav .owl-prev').trigger('click');
+                });
+
+                poligonsNext.on('click', function() {
+                    $('#poligons .owl-nav .owl-next').trigger('click');
+                });
+
+                poligonsPrev.show();
+                poligonsNext.show();
+            } else
+                poligonsList.addClass('without-carousel');
+
+            gamesPrev.on('click', function() {
+                $('#poligonsgames .owl-nav .owl-prev').trigger('click');
+            });
+
+            gamesNext.on('click', function() {
+                $('#poligonsgames .owl-nav .owl-next').trigger('click');
+            });
+
             $('.calendar__control--prev').on('click', () => {
                 calendar.prev();
             });
@@ -446,7 +601,6 @@
             });
         });
     </script>
-
 
 </body>
 

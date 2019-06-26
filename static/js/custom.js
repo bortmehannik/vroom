@@ -32,8 +32,6 @@ $(document).ready(function() {
 
 function getRooms(city) {
 
-    $("#poligonsgames").html("");
-
         $.ajax({
             type: "GET",
             url: "http://var-vision.com/Api/Booking/GetGamePointsAndRoomsForCity?city="+city,
@@ -41,30 +39,46 @@ function getRooms(city) {
             //data: "caturl=" + caturl + "&typeid=" + typeid + "&count=" + count,
             dataType: "json",
             success: function (data) {
-                var datatext = '<td>Игра</td>';
+                var datatext = '';
 
-                $("#reservationTime").append('<table>\n' +
-                    '                                        <tr>');
+                var gamesBtns = $('#poligonsgames .poligons__btn');
+                var gamesPrev = $('#poligonsgames .poligons__prev');
+                var gamesNext = $('#poligonsgames .poligons__next');
 
                 $.each(data[0].Rooms, function (index, value) {
-                   $.each(value.Games, function (index, secondValue) {
-                       // test = secondValue.split(' ');
-                       // namegame = '<span>'+test.join('</span><br><span>')+'</span>';
-                       datatext +='<td>\n' +
-                           '<button onclick="selectGame('+value.Id+')" id="gameid_'+value.Id+'">'+secondValue+'</button>\n' + '</td>';
-                   })
+                    $.each(value.Games, function (index, secondValue) {
+                        // test = secondValue.split(' ');
+                        // namegame = '<span>'+test.join('</span><br><span>')+'</span>';
+                        datatext +='<div class="poligons-list__item">\n' +
+                            '<button class="poligons__btn" onclick="selectGame('+value.Id+')" id="gameid_'+value.Id+'"><p class="poligons__name games__name">'+secondValue+'</p></button>' + '</div>';
+                    })
                 });
 
-      //           $.each(data[0].Rooms, function(index, value){
-      //               test = value.Name.split(' ');
-      //               namegame = '<span>'+test.join('</span><br><span>')+'</span>';
-      //               datatext +='<td>\n' +
-      // '<button onclick="selectGame('+value.Id+');" id="gameid_'+value.Id+'">'+namegame+'</button>\n' + '</td>';
-      //           });
+                //           $.each(data[0].Rooms, function(index, value){
+                //               test = value.Name.split(' ');
+                //               namegame = '<span>'+test.join('</span><br><span>')+'</span>';
+                //               datatext +='<td>\n' +
+                // '<button onclick="selectGame('+value.Id+');" id="gameid_'+value.Id+'">'+namegame+'</button>\n' + '</td>';
+                //           });
 
-$('#poligonsgames').show();
+                var gamesList = $("#games__list");
 
-                $("#poligonsgames").append(datatext);
+                gamesList.html(datatext);
+                gamesList.owlCarousel('destroy');
+
+                if (gamesBtns.length > 3) {
+                    gamesList.owlCarousel({
+                        nav: true
+                    });
+
+                    gamesPrev.show();
+                    gamesNext.show();
+                } else {
+                    gamesPrev.hide();
+                    gamesNext.hide();
+                }
+
+                $('#poligonsgames').removeClass('games--hide');
 
 
             }
@@ -75,7 +89,7 @@ function selectPoint(pointId) {
     //отправляем запрос на api
 
     $('#pointId').val(pointId);
-    $('#poligons button').removeClass('activepoint');
+    $('#poligons .poligons__btn').removeClass('activepoint');
     $('#poligon_'+pointId).addClass('activepoint');
 
     getRooms('Санкт-Петербург');
