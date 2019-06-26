@@ -4,15 +4,12 @@ var leftPlayers = false;
 var name;
 var phone;
 var mail;
-<<<<<<< HEAD
 var privacy = false;
 var promo;
 var notes;
 var fullPay = true;
 var gameName;
 var poligonName;
-=======
->>>>>>> 48cf9080b19d9cecfa7b3b5a11e7b1b6e742f767
 function selectGame(gameId) {
     $('#gameId').val(gameId);
 
@@ -931,7 +928,6 @@ $(function () {
         $('#nav-home').addClass('show active');
     });
     linkNextProfile.on('click', function () {
-<<<<<<< HEAD
         this.name = $(".formPay input[name='name']").val();
         this.phone = $(".formPay input[name='phone']").val();
         this.mail = $(".formPay input[name='mail']").val();
@@ -945,7 +941,6 @@ $(function () {
             $('.information #phone').text(this.phone);
             $('.information #email').text(this.mail + ', ');
         }
-=======
         $('#nav-profile-tab').removeClass('active');
         $('#nav-contact-tab').addClass('active');
         $('#nav-profile').removeClass('show active');
@@ -965,7 +960,6 @@ $(function () {
         $('.information #name').text(this.name + ', ');
         $('.information #phone').text(this.phone);
         $('.information #email').text(this.mail + ', ');
->>>>>>> 48cf9080b19d9cecfa7b3b5a11e7b1b6e742f767
     });
     linkBackContact.on('click', function () {
         $('#nav-contact-tab').removeClass('active');
