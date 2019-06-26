@@ -4,10 +4,15 @@ var leftPlayers = false;
 var name;
 var phone;
 var mail;
+<<<<<<< HEAD
 var privacy = false;
 var promo;
 var notes;
 var fullPay = true;
+var gameName;
+var poligonName;
+=======
+>>>>>>> 48cf9080b19d9cecfa7b3b5a11e7b1b6e742f767
 function selectGame(gameId) {
     $('#gameId').val(gameId);
 
@@ -32,25 +37,9 @@ $(document).ready(function() {
             leftPlayers = true;
         }
     });
-
-    $('.promo button').click(function() {
-        promo = $(".formPay input[name='promo']").val();
-        console.log('Create ajax');
-    });
-
-    $('.policy').children().click(function() {
-       privacy = $(this).is(':checked');
-    });
-
-    $('.methods-pay button').click(function() {
-        $(this).hasClass('full-pay') ? fullPay = true : fullPay = false;
-        console.log(fullPay);
-    });
 });
 
 function getRooms(city) {
-
-    // $("#poligonsgames").html("");
 
         $.ajax({
             type: "GET",
@@ -61,29 +50,46 @@ function getRooms(city) {
             success: function (data) {
                 var datatext = '';
 
+                var gamesBtns = $('#poligonsgames .poligons__btn');
+                var gamesPrev = $('#poligonsgames .poligons__prev');
+                var gamesNext = $('#poligonsgames .poligons__next');
+
                 $.each(data[0].Rooms, function (index, value) {
-                   $.each(value.Games, function (index, secondValue) {
-                       // test = secondValue.split(' ');
-                       // namegame = '<span>'+test.join('</span><br><span>')+'</span>';
-                       datatext +='<li class="poligons-list__item">\n' +
-                           '<button class="poligons__btn" onclick="selectGame('+value.Id+')" id="gameid_'+value.Id+'"><p class="poligons__name games__name">'+secondValue+'</p></button>' + '</li>';
-                   })
+                    $.each(value.Games, function (index, secondValue) {
+                        // test = secondValue.split(' ');
+                        // namegame = '<span>'+test.join('</span><br><span>')+'</span>';
+                        datatext +='<div class="poligons-list__item">\n' +
+                            '<button class="poligons__btn" onclick="selectGame('+value.Id+')" id="gameid_'+value.Id+'"><p class="poligons__name games__name">'+secondValue+'</p></button>' + '</div>';
+                    })
                 });
 
-      //           $.each(data[0].Rooms, function(index, value){
-      //               test = value.Name.split(' ');
-      //               namegame = '<span>'+test.join('</span><br><span>')+'</span>';
-      //               datatext +='<td>\n' +
-      // '<button onclick="selectGame('+value.Id+');" id="gameid_'+value.Id+'">'+namegame+'</button>\n' + '</td>';
-      //           });
+                //           $.each(data[0].Rooms, function(index, value){
+                //               test = value.Name.split(' ');
+                //               namegame = '<span>'+test.join('</span><br><span>')+'</span>';
+                //               datatext +='<td>\n' +
+                // '<button onclick="selectGame('+value.Id+');" id="gameid_'+value.Id+'">'+namegame+'</button>\n' + '</td>';
+                //           });
 
                 var gamesList = $("#games__list");
 
                 gamesList.html(datatext);
                 gamesList.owlCarousel('destroy');
-                gamesList.owlCarousel();
+
+                if (gamesBtns.length > 3) {
+                    gamesList.owlCarousel({
+                        nav: true
+                    });
+
+                    gamesPrev.show();
+                    gamesNext.show();
+                } else {
+                    gamesPrev.hide();
+                    gamesNext.hide();
+                }
 
                 $('#poligonsgames').removeClass('games--hide');
+
+
             }
         });
 }
@@ -104,31 +110,29 @@ $(document).ready(function () {
     $('.btnNext button').click(function () {
         var gameId = $('#gameId').val();
         var gamePointId = $('#pointId').val();
-        var gameName = '';
-        var poligonName = '';
-        $.each($('tr.games td'), function() {
-            if ($(this).children('button').hasClass('activepoint')) {
-                gameName = $(this).text();
+        $.each($('ul#poligons__list .owl-item'), function() {
+            if ($(this).find('button').hasClass('activepoint')) {
+                gameName = $(this).find('button').children().clone();
             }
         });
-        $.each($('tr.poligons td'), function() {
-           if ($(this).children('button').hasClass('activepoint')) {
-               poligonName = $(this).children('button').children().clone();
+        $.each($('ul#games__list .owl-item'), function() {
+            if ($(this).find('button').hasClass('activepoint')) {
+               poligonName = $(this).find('button').children().clone();
            }
         });
         $('.locationGame p').html(poligonName);
-        $('.nameGame > p').text(gameName);
+        $('.nameGame > p').html(gameName);
         if (gameId != 0 && gamePointId != 0) {
             $('.oneWindow').slideUp('slow', function () {
                 $('.twoWindow').slideDown('slow');
             });
-            Data = new Date();
-            $('#day').val(Data.getDate());
+            // Data = new Date();
+            // $('#day').val(Data.getDate());
             // $('#resultSelect').hide();
-            $('#gamemonth').val(Data.getMonth()+1);
-            createMonth(Data.getMonth(), Data.getFullYear());
-            createDateDay(Data.getDay(), Data.getMonth(),Data.getDate());
-            createCalendar(2019, 5);
+            // $('#gamemonth').val(Data.getMonth()+1);
+            // createMonth(Data.getMonth(), Data.getFullYear());
+            // createDateDay(Data.getDay(), Data.getMonth(),Data.getDate());
+            // createCalendar(2019, 5);
 
             getGameInfo();
         }
@@ -438,10 +442,6 @@ function getGameInfo() {
     Day = $('#day').val();
 
 
-
-
-
-
     $.ajax({
         type: "GET",
         // url: "/test.php?gamePointId=1&gameId=" + gameId + "&datetime=" + Year + "-" + Month + "-" + Day + "&leftPlayers=" + leftPlayers + "&playersNumber=5",
@@ -521,41 +521,39 @@ $(function () {
         }
     });
 
-    $('.formPay form').on('submit', function (e) {
-        return false;
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const $form = $(this);
+        let err = false;
+        $form.addClass('sending');
 
-        // e.preventDefault();
-        // e.stopPropagation();
-        // const $form = $(this);
-        // let err = false;
-        // $form.addClass('sending');
-        //
-        // $('input', $form).each(function () {
-        //     if ($(this).hasClass('error')) {
-        //         err = true;
-        //     }
-        // });
-        //
-        // if (!err) {
-        //     if (!$form.hasClass("successful")) return $.ajax({
-        //         type: "POST",
-        //         url: "/send.php",
-        //         data: $form.serialize(),
-        //         cache: !1,
-        //         success: function (t) {
-        //             //Success
-        //             $form.slideUp(500, function () {
-        //                 $('input, textarea', $form).val('');
-        //             });
-        //
-        //             $form.next('.success-message').slideDown(500);
-        //
-        //             $form.addClass('successful');
-        //         }
-        //     });
-        // } else {
-        //     $form.removeClass('sending');
-        // }
+        $('input', $form).each(function () {
+            if ($(this).hasClass('error')) {
+                err = true;
+            }
+        });
+
+        if (!err) {
+            if (!$form.hasClass("successful")) return $.ajax({
+                type: "POST",
+                url: "/send.php",
+                data: $form.serialize(),
+                cache: !1,
+                success: function (t) {
+                    //Success
+                    $form.slideUp(500, function () {
+                        $('input, textarea', $form).val('');
+                    });
+
+                    $form.next('.success-message').slideDown(500);
+
+                    $form.addClass('successful');
+                }
+            });
+        } else {
+            $form.removeClass('sending');
+        }
     });
 
     $('.testing__btn').on('click', function () {
@@ -933,18 +931,41 @@ $(function () {
         $('#nav-home').addClass('show active');
     });
     linkNextProfile.on('click', function () {
-        $('#nav-profile-tab').removeClass('active');
-        $('#nav-contact-tab').addClass('active');
-        $('#nav-profile').removeClass('show active');
-        $('#nav-contact').addClass('show active');
+<<<<<<< HEAD
         this.name = $(".formPay input[name='name']").val();
         this.phone = $(".formPay input[name='phone']").val();
         this.mail = $(".formPay input[name='mail']").val();
         this.notes = $(".formPay input[name='notes']").val();
+        if (this.name !== '' && this.phone !== '' && this.mail !== '') {
+            $('#nav-profile-tab').removeClass('active');
+            $('#nav-contact-tab').addClass('active');
+            $('#nav-profile').removeClass('show active');
+            $('#nav-contact').addClass('show active');
+            $('.information #name').text(this.name + ', ');
+            $('.information #phone').text(this.phone);
+            $('.information #email').text(this.mail + ', ');
+        }
+=======
+        $('#nav-profile-tab').removeClass('active');
+        $('#nav-contact-tab').addClass('active');
+        $('#nav-profile').removeClass('show active');
+        $('#nav-contact').addClass('show active');
+        // $('.formPay input').each(function() {
+        //     if ($(this).attr(name) == 'name') {
+        //         this.name = $(this).val();
+        //     } else if ($(this).attr(phone) == 'phone') {
+        //         this.phone = $(this).val();
+        //     } else if ($(this).attr(mail) == 'mail') {
+        //         this.mail = $(this).val();
+        //     }
+        // });
+        this.name = $(".formPay input[name='name']").val();
+        this.phone = $(".formPay input[name='phone']").val();
+        this.mail = $(".formPay input[name='mail']").val();
         $('.information #name').text(this.name + ', ');
         $('.information #phone').text(this.phone);
         $('.information #email').text(this.mail + ', ');
-        console.log(this.notes);
+>>>>>>> 48cf9080b19d9cecfa7b3b5a11e7b1b6e742f767
     });
     linkBackContact.on('click', function () {
         $('#nav-contact-tab').removeClass('active');

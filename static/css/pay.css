@@ -25,13 +25,13 @@ html {
 
 body {
   background-color: #27b8d1;
-  background-image: -webkit-gradient(linear, left bottom, left top, from(#097fc6), to(#0a2b4c));
-  background-image: -webkit-linear-gradient(bottom, #097fc6 0%, #0a2b4c 100%);
-  background-image: -o-linear-gradient(bottom, #097fc6 0%, #0a2b4c 100%);
-  background-image: linear-gradient(to top, #097fc6 0%, #0a2b4c 100%);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#04578a), to(#0a2b4c));
+  background-image: -webkit-linear-gradient(bottom, #04578a 0%, #0a2b4c 100%);
+  background-image: -o-linear-gradient(bottom, #04578a 0%, #0a2b4c 100%);
+  background-image: linear-gradient(to top, #04578a 0%, #0a2b4c 100%);
   font-family: 'Gotham Pro Regular',sans-serif;
   color: white;
-  /*  background: url("../../static/img/back2.png") no-repeat;*/
+    /*background: url("../../static/img/back2.png") no-repeat;*/
   background-size: cover;
   overflow-x: hidden;
   height: 100%; }
@@ -95,7 +95,8 @@ body {
 .pay .wrapperSlider .oneWindow .cross {
   position: absolute;
   top: -95px;
-  left: 90px; }
+  left: 90px;
+  z-index: -1;}
 .pay .wrapperSlider .oneWindow table {
   margin: 0 auto 84px;
   position: relative; }
@@ -909,28 +910,6 @@ body {
   line-height: 11px; }
 .pay .wrapperSlider .twoWindow .tab-content #nav-contact .creditly-card-form .policy p {
   margin-bottom: 0; }
-.promo {
-  text-align: center;
-  margin-top: 15px;
-}
-
-.promo button {
-  background: url(../../static/img/btnNextHover.png) center no-repeat;
-  outline: none;
-  text-shadow: 0 0 2px #23bad3;
-  color: #ffffff;
-  line-height: 19.21px;
-  text-transform: uppercase;
-  font-family: 'Gotham Pro Medium', sans-serif;
-  font-size: 12px;
-  width: 191px;
-  height: 54px;
-  z-index: 99;
-  position: relative;
-  -webkit-transition: 0.4s;
-  -o-transition: 0.4s;
-  transition: 0.4s;
-}
 
 @media (max-width: 768px) {
   .pay .wrapperSlider .oneWindow table tr td {
@@ -1077,41 +1056,4 @@ body {
   top: 225px;
   z-index: 1;
   cursor: pointer;
-}
-
-.formPay input::-webkit-input-placeholder {
-  color: #ffffff;
-  opacity: 0.44; }
-.formPay  input:-moz-placeholder {
-  color: #ffffff;
-  opacity: 0.44; }
-.formPay input::-moz-placeholder {
-  color: #ffffff;
-  opacity: 0.44; }
-.formPay input:-ms-input-placeholder {
-  color: #ffffff;
-  opacity: 0.44;
-}
-
-#go-to-pay {
-  background: url(../../static/img/btnNextHover.png) center no-repeat;
-  outline: none;
-  text-shadow: 0 0 2px #23bad3;
-  color: #ffffff;
-  line-height: 19.21px;
-  text-transform: uppercase;
-  font-family: 'Gotham Pro Medium', sans-serif;
-  font-size: 12px;
-  width: 191px;
-  height: 54px;
-  z-index: 99;
-  position: relative;
-  -webkit-transition: 0.4s;
-  -o-transition: 0.4s;
-  transition: 0.4s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  text-decoration: none;
 }
