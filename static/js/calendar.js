@@ -3,6 +3,18 @@
     const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
         monthNames = [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ];
 
+    Date.prototype.getLocaleString = function() {
+        const currentMonth = this.getMonth();
+
+        let monthName = monthNames[currentMonth];
+
+        if(currentMonth == 2 || currentMonth == 7)
+            monthName += 'а';
+        else monthName = monthName.substring(0, monthName.length - 1) + 'я';
+
+        return this.getDate() + ' ' + monthName + ' ' + this.getFullYear();
+    };
+
     let actualDate = new Date();
 
     const isActualDay = (year, month, day) =>

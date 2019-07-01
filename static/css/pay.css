@@ -233,7 +233,12 @@ body {
   border-top-right-radius: 10px;
   border: 1px solid #3b5975;
   border-bottom: none;
-  background: #0f4b6b; }
+  background: #0f4b6b;
+  pointer-events: none;
+}
+.pay .wrapperSlider .twoWindow nav .nav .nav-item:first-of-type {
+    pointer-events: auto;
+}
 .pay .wrapperSlider .twoWindow nav .nav .active {
   background: #3b5975;
   border: 1px solid #3b5975;
@@ -788,7 +793,7 @@ body {
   display: flex;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
-  justify-content: space-between; }
+  justify-content: center; }
 .pay .wrapperSlider .twoWindow .tab-content #nav-contact .btnBlock .active {
   opacity: 1; }
 .pay .wrapperSlider .twoWindow .tab-content #nav-contact .btnBlock button {
@@ -1124,5 +1129,61 @@ body {
   color: #ffffff;
   text-decoration: none;
 }
+
+.slot__current-day {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+
+.booking-slots table {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.booking-slots table td {
+    cursor: pointer;
+    border: 2px solid #24b9d1;
+    text-align: center;
+    -webkit-transition: all .25s;
+    -moz-transition: all .25s;
+    -ms-transition: all .25s;
+    -o-transition: all .25s;
+    transition: all .25s;
+}
+
+.booking-slots table td:hover {
+    background-color: #972c67;
+}
+
+.booking-slots table .time {
+    font-size: 20px;
+    color: #24b9d1;
+    -webkit-transition: all .25s;
+    -moz-transition: all .25s;
+    -ms-transition: all .25s;
+    -o-transition: all .25s;
+    transition: all .25s;
+}
+
+.booking-slots table td:hover .time, .booking-slots table td.active .time {
+    color: #ffffff;
+}
+
+.booking-slots table .price {
+    font-size: 13px;
+}
+
+.booking-slots td.active {
+    background-color: #972c67;
+}
+
+.result {
+    display: none;
+}
+
+
 
 

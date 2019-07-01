@@ -157,25 +157,25 @@
                                 <button class="poligons__prev"><</button>
                                 <div id="poligons__list" class="poligons-list without-carousel">
                                     <div class="poligons-list__item">
-                                        <button class="poligons__btn" onclick="selectPoint(1);" id="poligon_1">
+                                        <button class="poligons__btn" data-point-id="1" onclick="selectPoint(1);" id="poligon_1">
                                             <p class="poligons__name">чапаева</p>
                                             <p class="poligons__metro">Горьковская</p>
                                         </button>
                                     </div>
                                     <div class="poligons-list__item">
-                                        <button class="poligons__btn" onclick="selectPoint(2);" id="poligon_2">
+                                        <button class="poligons__btn" data-point-id="2" onclick="selectPoint(2);" id="poligon_2">
                                             <p class="poligons__name">Попова</p>
                                             <p class="poligons__metro">Петроградская</p>
                                         </button>
                                     </div>
                                     <div class="poligons-list__item">
-                                        <button class="poligons__btn" onclick="selectPoint(3);" id="poligon_3">
+                                        <button class="poligons__btn" data-point-id="3" onclick="selectPoint(3);" id="poligon_3">
                                             <p class="poligons__name">Ломоносова</p>
                                             <p class="poligons__metro">Елизаровская</p>
                                         </button>
                                     </div>
                                     <div class="poligons-list__item">
-                                        <button class="poligons__btn" onclick="selectPoint(4);" id="poligon_4">
+                                        <button class="poligons__btn" data-point-id="4" onclick="selectPoint(4);" id="poligon_4">
                                             <p class="poligons__name">Савушкина</p>
                                             <p class="poligons__metro">Беговая</p>
                                         </button>
@@ -260,7 +260,12 @@
                                     <div class="calendar__wrapper"></div>
                                     <button class="calendar__control calendar__control--next">&#8250;</button>
                             </div>
-
+                            <div class="booking-slots">
+                                <p class="slot__current-day">Суббота 30 июня</p>
+                                <table>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                             <div class="reference">
                                 <div class="item">
                                     <div class="colorChoice"></div>
@@ -270,7 +275,6 @@
                                     <div class="colorFree"></div>
                                     <div class="free">Свободно</div>
                                 </div>
-
                             </div>
                             <div class="selected">
                                 <div class="nameGame">
@@ -303,12 +307,12 @@
                                         </div>
                                     </div>
                                     <p class="referentsQuantity" id="referentsQuantity"><span>1</span> &#215; <span
-                                            id="prcePer">1000</span></p>
+                                            class="prcePer">1000</span></p>
                                     <div class="line">
                                         <img src="static/img/line3.png" alt="">
                                     </div>
                                     <div class="resultPrice" id="resultPrice">
-                                        <p>Итого: 5000</p>
+                                        <p>Итого: <span>5000</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -377,25 +381,25 @@
                                         </div>
                                     </div>
                                     <p class="referentsQuantity" id="referentsQuantity2"><span>1</span> &#215; <span
-                                            id="prcePer2">1000</span></p>
+                                            class="prcePer">1000</span></p>
                                     <div class="line">
                                         <img src="static/img/line3.png" alt="">
                                     </div>
                                     <div class="resultPrice">
-                                        <p>Итого: 5000</p>
+                                        <p>Итого: <span>5000</span></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="buttonsBlock">
                                 <button class="linkBack">Назад</button>
-                                <button class="linkNext" id="bookthis" onclick="bookApi(this)"
+                                <button class="linkNext" id="bookthis"
                                     arrayid="">Продолжить</button>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                             <div class="btnBlock">
                                 <button class="active">100% оплата онлайн</button>
-                                <button>25% (с доплатой на месте)</button>
+                                <!--<button>25% (с доплатой на месте)</button>-->
                             </div>
                             <!--<form class="creditly-card-form">-->
                                 <!--<section class="creditly-wrapper">-->
@@ -479,18 +483,18 @@
                                             <img src="static/img/priceIco.png" alt="">
                                         </div>
                                     </div>
-                                    <p class="referentsQuantity">1 &#215; 1000 </p>
+                                    <p class="referentsQuantity"><span>1</span> &#215; <span class="prcePer">1000</span> </p>
                                     <div class="line">
                                         <img src="static/img/line3.png" alt="">
                                     </div>
                                     <div class="resultPrice">
-                                        <p>Итого: 5000</p>
+                                        <p>Итого: <span>5000</span></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="buttonsBlock">
                                 <button class="linkBack">Назад</button>
-                                <button class="linkNext">Купить</button>
+                                <button class="linkNext" id="buy">Купить</button>
                             </div>
                             <div class="policyCard">
                                 <p>Совершая ввод карточных данных, убедитесь что ознакомились с <a href="#">политикой
@@ -530,78 +534,106 @@
 
     <script src="static/js/custom.js"></script>
 
-    <script>
-        let a = null;
-        const calendar = new Calendar(document.querySelector('.calendar__wrapper'), {
-            // wrapper: true,
-            selectebleDate: true,
-            selectFunction: function () {
-                if ($(this).hasClass('active')) return;
-                $('.booking-calendar td.active').removeClass('active');
-                $(this).addClass('active');
+    <!--<script>-->
+        <!--let a = null;-->
+        <!--const calendar = new Calendar(document.querySelector('.calendar__wrapper'), {-->
+            <!--// wrapper: true,-->
+            <!--selectebleDate: true,-->
+            <!--selectFunction: function () {-->
+                <!--if ($(this).hasClass('active')) return;-->
+                <!--$('.booking-calendar td.active').removeClass('active');-->
+                <!--$(this).addClass('active');-->
+                <!--$('.result').css('display', 'none');-->
 
-                const currentDate = new Date(this.dataset.date);
 
-                const data = {
-                    gamePointId: 1,
-                    gameId: 7,
-                    datetime: currentDate.toISOString(),
-                    endTime: currentDate.toISOString(),
-                    leftPlayers: true,
-                    playersNumber: 1
-                };
+                <!--currentDate = new Date(this.dataset.date);-->
 
-                $.getJSON('http://vroom/test.php', data, response => {
-                    console.log(response);
-                });
-            }
-        });
+                <!--const data = {-->
+                    <!--gamePointId: pointId,-->
+                    <!--gameId: gameId,-->
+                    <!--beginTime: currentDate.toISOString(),-->
+                    <!--endTime: currentDate.toISOString(),-->
+                    <!--leftPlayers: leftPlayers,-->
+                    <!--playersNumber: countPeople-->
+                <!--};-->
+                <!--const currentDay = document.querySelector('.slot__current-day');-->
+                <!--currentDay.innerHTML = currentDate.getLocaleString().toUpperCase();-->
 
-        $(document).ready(() => {
-            var poligonsList = $('#poligons__list');
-            var poligonsBtns = $('#poligons .poligons__btn');
-            var poligonsPrev = $('#poligons .poligons__prev');
-            var poligonsNext = $('#poligons .poligons__next');
-            var gamesPrev = $('#poligonsgames .poligons__prev');
-            var gamesNext = $('#poligonsgames .poligons__next');
+                    <!--$.getJSON('http://var-vision.com/Api/Booking/GetTimeSlots', data, response => {-->
+                        <!--let rowCount = Math.ceil(response.length / 5);-->
+                        <!--let table = '';-->
+                        <!--let inc = 0;-->
+                        <!--let lenghtResponse = 5;-->
+                        <!--for (var i = 0; i < rowCount; i++) {-->
+                            <!--table += '<tr>';-->
+                            <!--for(var j = inc; j < lenghtResponse; j++) {-->
+                                <!--table += '<td>' +-->
+                                    <!--'<div class="time" data-time-formatted="'+ response[j][0].BookingRoomOptionModel.PricingSlotModel.StartTime + '">' + response[j][0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted + '</div>' +-->
+                                    <!--'<div class="price"><span>' + response[j][0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer + '</span> р.' + '</div>';-->
+                                <!--table += '</td>';-->
+                            <!--}-->
+                            <!--lenghtResponse += 5;-->
+                            <!--if (lenghtResponse > response.length) {-->
+                                <!--lenghtResponse = lenghtResponse - (lenghtResponse - response.length);-->
+                            <!--}-->
+                            <!--inc += 5;-->
+                            <!--table += '</tr>';-->
+                        <!--}-->
+                        <!--$('.booking-slots tbody').html(table);-->
+                        <!--for (var j = 0; j < response.length; j++) {-->
+                            <!--console.log(response[j][0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer);-->
+                        <!--}-->
+                    <!--});-->
 
-            if (poligonsBtns.length > 3) {
-                poligonsList.removeClass('without-carousel');
-                poligonsList.addClass('owl-carousel');
 
-                $('#poligons__list').owlCarousel({
-                    nav: true
-                });
+            <!--}-->
+        <!--});-->
 
-                poligonsPrev.on('click', function() {
-                    $('#poligons .owl-nav .owl-prev').trigger('click');
-                });
+        <!--$(document).ready(() => {-->
+            <!--var poligonsList = $('#poligons__list');-->
+            <!--var poligonsBtns = $('#poligons .poligons__btn');-->
+            <!--var poligonsPrev = $('#poligons .poligons__prev');-->
+            <!--var poligonsNext = $('#poligons .poligons__next');-->
+            <!--var gamesPrev = $('#poligonsgames .poligons__prev');-->
+            <!--var gamesNext = $('#poligonsgames .poligons__next');-->
 
-                poligonsNext.on('click', function() {
-                    $('#poligons .owl-nav .owl-next').trigger('click');
-                });
+            <!--if (poligonsBtns.length > 3) {-->
+                <!--poligonsList.removeClass('without-carousel');-->
+                <!--poligonsList.addClass('owl-carousel');-->
 
-                poligonsPrev.show();
-                poligonsNext.show();
-            } else
-                poligonsList.addClass('without-carousel');
+                <!--$('#poligons__list').owlCarousel({-->
+                    <!--nav: true-->
+                <!--});-->
 
-            gamesPrev.on('click', function() {
-                $('#poligonsgames .owl-nav .owl-prev').trigger('click');
-            });
+                <!--poligonsPrev.on('click', function() {-->
+                    <!--$('#poligons .owl-nav .owl-prev').trigger('click');-->
+                <!--});-->
 
-            gamesNext.on('click', function() {
-                $('#poligonsgames .owl-nav .owl-next').trigger('click');
-            });
+                <!--poligonsNext.on('click', function() {-->
+                    <!--$('#poligons .owl-nav .owl-next').trigger('click');-->
+                <!--});-->
 
-            $('.calendar__control--prev').on('click', () => {
-                calendar.prev();
-            });
-            $('.calendar__control--next').on('click', () => {
-                calendar.next();
-            });
-        });
-    </script>
+                <!--poligonsPrev.show();-->
+                <!--poligonsNext.show();-->
+            <!--} else-->
+                <!--poligonsList.addClass('without-carousel');-->
+
+            <!--gamesPrev.on('click', function() {-->
+                <!--$('#poligonsgames .owl-nav .owl-prev').trigger('click');-->
+            <!--});-->
+
+            <!--gamesNext.on('click', function() {-->
+                <!--$('#poligonsgames .owl-nav .owl-next').trigger('click');-->
+            <!--});-->
+
+            <!--$('.calendar__control&#45;&#45;prev').on('click', () => {-->
+                <!--calendar.prev();-->
+            <!--});-->
+            <!--$('.calendar__control&#45;&#45;next').on('click', () => {-->
+                <!--calendar.next();-->
+            <!--});-->
+        <!--});-->
+    <!--</script>-->
 
 </body>
 

@@ -1,6 +1,10 @@
 var test2Result;
-var countPeople;
+var gameId;
+var pointId;
+var roomId;
+var countPeople = 1;
 var leftPlayers = false;
+var currentDate;
 var name;
 var phone;
 var mail;
@@ -10,12 +14,20 @@ var notes;
 var fullPay = true;
 var gameName;
 var poligonName;
+var price;
+var totalPrice;
 function selectGame(gameId) {
     $('#gameId').val(gameId);
 
-    $('#poligonsgames button').removeClass('activepoint');
-    $('#gameid_'+gameId).addClass('activepoint');
+    // $('#poligonsgames button').removeClass('activepoint');
+    // $('#gameid_'+gameId).addClass('activepoint');
     $('#step1').removeAttr('disabled');
+    this.gameId = gameId;
+    $('#games__list').find('.poligons-list__item').on('click', 'button', function() {
+        $('#games__list').find('.poligons-list__item button').removeClass('activepoint');
+       $(this).addClass('activepoint');
+    });
+    console.log(this.gameId);
     /*   $('.oneWindow').slideUp('slow', function () {
            $('.twoWindow').slideDown('slow');
        });*/
@@ -26,7 +38,6 @@ function selectGame(gameId) {
 
 $(document).ready(function() {
 
-    // getRooms('Санкт-Петербург');
     $('.inputsCommands label').click(function() {
         if ($(this).attr('for') == 'own') {
             leftPlayers = false;
@@ -40,10 +51,54 @@ $(document).ready(function() {
        return false;
     });
 
-    $('.go-to-pay').click(function() {
-       console.log('Перейти к оплате');
+    $('.policy input').click(function() {
+        privacy = !privacy;
+        console.log(privacy);
     });
+
+    chooseSlot();
+    getTimeSlots();
 });
+
+$('.go-to-pay').click(function() {
+    bookApi();
+});
+
+function bookApi() {
+
+    var bookingRoomModels = new Array();
+    var bookingRoomModel = {
+        PlayersNumber: countPeople,
+        GameId: gameId,
+        RoomId: roomId,
+        StartTime: this.currentDate,
+        // StartTime: '2019-07-21T22:45:00+03:00',
+        OccupyAllRoom: true
+    };
+    bookingRoomModels.push(bookingRoomModel);
+    var data = {
+        PhoneNumber: $('.information span#name').text(),
+        ClientEmail: $('.information span#email').text(),
+        ClientName: $('.information span#phone').text(),
+        BookingRoomModels: bookingRoomModels,
+        PromoCodeString: ''
+    };
+    console.log(data);
+
+    $.ajax({
+        type: 'POST',
+        url: 'http://var-vision.com/Api/Booking/BookOrder',
+        data: data,
+        success: function(data) {
+            console.log(data);
+            window.location.href = data.PaymentFormUrl;
+        }
+    }).fail(function(data) {
+        console.log(data);
+        alert(data.responseJSON.Message);
+
+    });
+}
 
 function getRooms(city) {
 
@@ -65,9 +120,11 @@ function getRooms(city) {
                         // test = secondValue.split(' ');
                         // namegame = '<span>'+test.join('</span><br><span>')+'</span>';
                         datatext +='<div class="poligons-list__item">\n' +
-                            '<button class="poligons__btn" onclick="selectGame('+value.Id+')" id="gameid_'+value.Id+'"><p class="poligons__name games__name">'+secondValue+'</p></button>' + '</div>';
+                            '<button class="poligons__btn" data-game-id="'+ index +'" onclick="selectGame('+index+')" id="gameid_'+value.Id+'"><p class="poligons__name games__name">'+secondValue+'</p></button>' + '</div>';
+                        roomId = value.Id;
                     })
                 });
+
 
                 //           $.each(data[0].Rooms, function(index, value){
                 //               test = value.Name.split(' ');
@@ -106,6 +163,8 @@ function selectPoint(pointId) {
     $('#pointId').val(pointId);
     $('#poligons .poligons__btn').removeClass('activepoint');
     $('#poligon_'+pointId).addClass('activepoint');
+    this.pointId = pointId;
+
 
     getRooms('Санкт-Петербург');
 }
@@ -114,7 +173,7 @@ $(document).ready(function () {
 
 
     $('.btnNext button').click(function () {
-        var gameId = $('#gameId').val();
+        // var gameId = $('#gameId').val();
         var gamePointId = $('#pointId').val();
         $.each($('#poligons__list .owl-item'), function() {
             if ($(this).find('button').hasClass('activepoint')) {
@@ -144,7 +203,7 @@ $(document).ready(function () {
             // createDateDay(Data.getDay(), Data.getMonth(),Data.getDate());
             // createCalendar(2019, 5);
 
-            getGameInfo();
+            // getGameInfo();
         }
     });
 
@@ -242,7 +301,7 @@ function selectDay(day) {
 
     $('#selectDateDay').html('').append(createDateDay(date.getDay(),$('#gamemonth').val(),day));
 
-    getGameInfo();
+    // getGameInfo();
 }
 function createCalendar(year, month) {
     //var elem = document.getElementById('.calendar');
@@ -299,15 +358,6 @@ else{
     // закрыть таблицу
     table += '</tr></table>';
 
-    // только одно присваивание innerHTML
-    //elem.innerHTML = table;
-/*    $('#calendarDots').html('').append('<li></li>\n' +
-        '                            <li></li>\n' +
-        '                            <li></li>\n' +
-        '                            <li class="active"></li>\n' +
-        '                            <li><a href="" onclick="createCalendar(2019, 6)"></a></li>\n' +
-        '                            <li></li>\n' +
-        '                            <li></li>');*/
     $('.calendar').html('').append(table);
     $('#reservationTime').empty();
     //
@@ -316,70 +366,6 @@ else{
 function createCalendar1(year, month) {
     $('#selectDateDay').empty();
     createCalendar(year, month);
-}
-
-
-/*
-var logged_in = '<!--?php echo $logged_in; ?-->';
-var poster = '<!--?php echo $_SESSION["poster"];?-->';
-$.ajax({
-    url: 'do_chat.php5',
-    type: 'post',
-    data: ({'poster': poster, 'logged_in': logged_in}),
-    dataType: 'json',
-    success: function (data) {
-        $.each(data, function (messageIndex, message) {
-            console.log(parseInt($('#chatWindow :last-child > span').html()) + ' ' + message['time']);
-            if ((parseInt(message['time']) > parseInt($('#chatWindow :last-child > span').html()))) {
-                $('#chatWindow').append('<div>' + message['poster'] + '</div><div><span>' + message['time'] + '</span>' + message['message'] + '</div>');
-            }
-        });
-    }referentsQuantity
-});*/
-
-function bookApi(btn) {
-
-
-    var arrayId = $(btn).attr("arrayId");
-    var phoneNumber = $("#confirmBookingPhone").val();
-    var clientEmail = $("#confirmBookingEmail").val();
-    var clientName = $("#confirmBookingName").val();
-    var obj = test2Result[arrayId];
-    var bookingRoomModels = new Array();
-    $.each(obj,
-        function(index) {
-            var bookingRoomModel = {
-                PlayersNumber: $(this)[0].PlayersNumber,
-                GameId: $(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.GameId,
-                RoomId: $(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.RoomId,
-                StartTime: moment($(this)[0].BookingRoomOptionModel.PricingSlotModel.StartTime).format(),
-                OccupyAllRoom: ($('input[name=command]:checked').val())
-            };
-            bookingRoomModels.push(bookingRoomModel);
-        });
-    var data = {
-        PhoneNumber: phoneNumber,
-        ClientEmail: clientEmail,
-        ClientName: clientName,
-        BookingRoomModels: bookingRoomModels
-    };
-    $.ajax({
-        type: 'POST',
-        url: 'http://var-vision.com/Api/Booking/BookOrder',
-        data: data,
-        success: function(data) {
-            console.log(data);
-            $('#confirmBookingModal').modal('toggle');
-            window.location.href = data.PaymentFormUrl;
-
-        }
-    }).fail(function(data) {
-        console.log(data);
-
-    });
-
-    //
-
 }
 
 
@@ -398,10 +384,7 @@ function timeButtonClick(btn) {
         obj[0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted +
         "</b></p>");
     var leftPlayers = $('input[name=command]:checked').val();
-    /*var leftPlayersBool = (leftPlayers.toUpperCase() === "TRUE");
-    $('#result-tickets').append("<p> Left players: <b>" +
-        leftPlayers +
-        "</b></p>");*/
+
     var allOrderPrice = 0;
     $.each(obj,
         function(element) {
@@ -431,88 +414,7 @@ function timeButtonClick(btn) {
 
             $('#bookthis').attr('arrayid',arrayId);
 
-
-            //$('.selected').append("<div class='card'><div class='card-body'>" + textInsideCard + "</div></div>");
         });
-    /*$('.selected')
-        .append("<button id='book' class='btn btn-primary' onclick='bookBtn(" + arrayId + ")'>book</button>");*/
-}
-
-function getGameInfo() {
-
-    var leftPlayers = $('input[name=command]:checked').val();
-    var gameId = $('#gameId').val();
-    var gamePointId = $('#pointId').val();
-    var amount = $('#contentSlider1').val();
-
-    //отправляем запрос для получения кучи инфы
-    Data = new Date();
-    Year = Data.getFullYear();
-    Month = $('#gamemonth').val();
-    Day = $('#day').val();
-
-
-    $.ajax({
-        type: "GET",
-        // url: "/test.php?gamePointId=1&gameId=" + gameId + "&datetime=" + Year + "-" + Month + "-" + Day + "&leftPlayers=" + leftPlayers + "&playersNumber=5",
-        url: "/test.php?gamePointId=" + gamePointId + "&gameId=" + gameId + "&datetime=" + Year + "-" + Month + "-" + Day + "&endTime=" + Year + "-" + Month + "-" + Day + "&leftPlayers=" + leftPlayers + "&playersNumber="+amount,
-        //data: "caturl=" + caturl + "&typeid=" + typeid + "&count=" + count,
-        dataType: "json",
-        success: function (data) {
-            var datatext = '<table><tr>';
-            //jquery part
-            $("#reservationTime").html(""); //clean
-            /*$("#reservationTime").append('<table>\n' +
-                '                                        <tr>');*/
-            var i = 1;
-            $.each(data,
-                function (obj) {
-                    var startTime = $(this)[0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted;
-                    var price = $(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer;
-                    var totalPrice = 0;
-                    $(this).each(function (x) {
-                        totalPrice += $(this)[0].TotalPrice;
-                    });
-
-                    datatext += '<td class="myBorder">\n' +
-                        '                                                <a href="#" onclick="timeButtonClick(this)" arrayid="'+obj+'" >\n' +
-                        '                                                    <div class="time">' + startTime + '</div>\n' +
-                        '                                                    <div class="price">' + price + ' р.</div>\n' +
-                        '                                                </a>\n' +
-                        '                                            </td>';
-                    /* $("#reservationTime").append('<td class="myBorder">\n' +
-                         '                                                <a href="#" onclick="timeButtonClick(this)" >\n' +
-                         '                                                    <div class="time">'+startTime+'</div>\n' +
-                         '                                                    <div class="price">'+price+' р.</div>\n' +
-                         '                                                </a>\n' +
-                         '                                            </td>');*/
-                    /*       $("#reservationTime").append(
-                                "<button class='btn btn-primary time-button' onclick='timeButtonClick(this)' arrayId='" +
-                                obj +
-                                "'><div name='time'>" +
-                                startTime +
-                                "</button>");*/
-                    //$(this)[0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted
-                    if (i == 6) {
-                        datatext += '</tr><tr>';
-                        //$("#reservationTime").append('</tr><tr>');
-                        i = 0;
-                    }
-                    i++;
-
-
-                });
-            datatext += '</tr></table>';
-
-            $("#reservationTime").append(datatext);
-            /*$("#reservationTime").append(' </tr>\n' +
-                '                                    </table>');*/
-            test2Result = data;
-            console.log(data);
-
-
-        }
-    });
 }
 
 
@@ -834,49 +736,9 @@ $(function () {
             $( "#contentSlider" ).html( countPeople );//При изменении значения ползунка заполняем элемент с id contentSlider
             $( "#contentSlider1" ).val( countPeople );
             $('.referentsQuantity span:first-child').text(countPeople);
+            getTotalPrice();
         }
     });
-
-   /* var values = [1, 2, 3,4];
-
-    var slider = $("#polzunok").slider({
-        min: values[0],
-        max: values[3],
-        slide: function (event, ui) {
-
-            var includeLeft = event.keyCode != $.ui.keyCode.RIGHT;
-            var includeRight = event.keyCode != $.ui.keyCode.LEFT;
-            slider.slider('option', 'value', findNearest(includeLeft, includeRight, ui.value));
-            if( ui.value<=3){
-                $( "#amount" ).val( 1  );
-                $('#referentsQuantity span').html('').append('1');
-            }
-            if( ui.value>3 && ui.value<=6 ){
-                $( "#amount" ).val( 5  );
-                $('#referentsQuantity span').html('').append('5');
-            }
-            if( ui.value>=8 && ui.value<=10 ){
-                $( "#amount" ).val( 10  );
-                $('#referentsQuantity span').html('').append('10');
-            }
-            return false;
-        }
-    });
-
-    function findNearest(includeLeft, includeRight, value) {
-        var nearest = null;
-        var diff = null;
-        for (var i = 0; i < values.length; i++) {
-            if ((includeLeft && values[i] <= value) || (includeRight && values[i] >= value)) {
-                var newDiff = Math.abs(value - values[i]);
-                if (diff == null || newDiff < diff) {
-                    nearest = values[i];
-                    diff = newDiff;
-                }
-            }
-        }
-        return nearest;
-    }*/
 });
 
 $(function () {
@@ -929,10 +791,13 @@ $(function () {
         });
     });
     linkNextHome.on('click', function () {
-        $('#nav-home-tab').removeClass('active');
-        $('#nav-profile-tab').addClass('active');
-        $('#nav-home').removeClass('show active');
-        $('#nav-profile').addClass('show active');
+        if (price !== undefined) {
+            $('#nav-home-tab').removeClass('active');
+            $('#nav-profile-tab').addClass('active');
+            $('#nav-home').removeClass('show active');
+            $('#nav-profile').addClass('show active');
+            $('a#nav-profile-tab').css('pointer-events', 'auto');
+        }
     });
     linkBacknProfile.on('click', function () {
         $('#nav-home-tab').addClass('active');
@@ -945,7 +810,7 @@ $(function () {
         this.phone = $(".formPay input[name='phone']").val();
         this.mail = $(".formPay input[name='mail']").val();
         this.notes = $(".formPay input[name='notes']").val();
-        if (this.name !== '' && this.phone !== '' && this.mail !== '') {
+        if (this.name !== '' && this.phone !== '' && this.mail !== '' && privacy !== false) {
             $('#nav-profile-tab').removeClass('active');
             $('#nav-contact-tab').addClass('active');
             $('#nav-profile').removeClass('show active');
@@ -953,6 +818,8 @@ $(function () {
             $('.information #name').text(this.name + ', ');
             $('.information #phone').text(this.phone);
             $('.information #email').text(this.mail + ', ');
+            $('a#nav-contact-tab').css('pointer-events', 'auto');
+            $('.selected .date p').text($('.slot__current-day').text());
         }
     });
     linkBackContact.on('click', function () {
@@ -980,3 +847,122 @@ $(function () {
         }
     });
 });
+
+//Выбор свободного места
+
+function getTotalPrice() {
+    $('.resultPrice p span').text(countPeople * price);
+}
+
+function chooseSlot() {
+    $('.booking-slots').on('click', 'td', function() {
+        $('.booking-slots').find('td').removeClass('active');
+        $(this).addClass('active');
+        currentDate = $(this).find('.time').attr("data-time-formatted");
+        price = $(this).find('.price span').text();
+        $('.result .referentsQuantity .prcePer').text(price);
+        getTotalPrice();
+        $('.result').css('display', 'block');
+    });
+}
+
+function getTimeSlots() {
+    let a = null;
+    const calendar = new Calendar(document.querySelector('.calendar__wrapper'), {
+        // wrapper: true,
+        selectebleDate: true,
+        selectFunction: function () {
+            if ($(this).hasClass('active')) return;
+            $('.booking-calendar td.active').removeClass('active');
+            $(this).addClass('active');
+            $('.result').css('display', 'none');
+
+
+            let currentDate = new Date(this.dataset.date);
+
+            const data = {
+                gamePointId: pointId,
+                gameId: gameId,
+                beginTime: currentDate.toISOString(),
+                endTime: currentDate.toISOString(),
+                leftPlayers: leftPlayers,
+                playersNumber: countPeople
+            };
+            const currentDay = document.querySelector('.slot__current-day');
+            currentDay.innerHTML = currentDate.getLocaleString().toUpperCase();
+                $.getJSON('http://var-vision.com/Api/Booking/GetTimeSlots', data, response => {
+                    let rowCount = Math.ceil(response.length / 5);
+                    let table = '';
+                    let inc = 0;
+                    let lenghtResponse = 5;
+                    for (var i = 0; i < rowCount; i++) {
+                        table += '<tr>';
+                        for(var j = inc; j < lenghtResponse; j++) {
+                            table += '<td>' +
+                                '<div class="time" data-time-formatted="'+ response[j][0].BookingRoomOptionModel.PricingSlotModel.StartTime + '">' + response[j][0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted + '</div>' +
+                                '<div class="price"><span>' + response[j][0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer + '</span> р.' + '</div>';
+                            table += '</td>';
+                        }
+                        lenghtResponse += 5;
+                        if (lenghtResponse > response.length) {
+                            lenghtResponse = lenghtResponse - (lenghtResponse - response.length);
+                        }
+                        inc += 5;
+                        table += '</tr>';
+                    }
+                    $('.booking-slots tbody').html(table);
+                    for (var j = 0; j < response.length; j++) {
+                        console.log(response[j][0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer);
+                    }
+                });
+
+
+        }
+    });
+
+    $(document).ready(() => {
+        var poligonsList = $('#poligons__list');
+        var poligonsBtns = $('#poligons .poligons__btn');
+        var poligonsPrev = $('#poligons .poligons__prev');
+        var poligonsNext = $('#poligons .poligons__next');
+        var gamesPrev = $('#poligonsgames .poligons__prev');
+        var gamesNext = $('#poligonsgames .poligons__next');
+
+        if (poligonsBtns.length > 3) {
+            poligonsList.removeClass('without-carousel');
+            poligonsList.addClass('owl-carousel');
+
+            $('#poligons__list').owlCarousel({
+                nav: true
+            });
+
+            poligonsPrev.on('click', function() {
+                $('#poligons .owl-nav .owl-prev').trigger('click');
+            });
+
+            poligonsNext.on('click', function() {
+                $('#poligons .owl-nav .owl-next').trigger('click');
+            });
+
+            poligonsPrev.show();
+            poligonsNext.show();
+        } else
+            poligonsList.addClass('without-carousel');
+
+        gamesPrev.on('click', function() {
+            $('#poligonsgames .owl-nav .owl-prev').trigger('click');
+        });
+
+        gamesNext.on('click', function() {
+            $('#poligonsgames .owl-nav .owl-next').trigger('click');
+        });
+
+        $('.calendar__control--prev').on('click', () => {
+            calendar.prev();
+        });
+        $('.calendar__control--next').on('click', () => {
+            calendar.next();
+        });
+    });
+}
+
