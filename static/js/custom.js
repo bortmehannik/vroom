@@ -368,12 +368,49 @@ function createCalendar1(year, month) {
     createCalendar(year, month);
 }
 
-
+// function getResponse() {
+//     var gamePointId = 1;
+//     var gameId = $("#gameSelect").find('option:selected').attr("gameId");
+//     today = $("#datetime").val();
+//     leftPlayers = $("#leftPlayers").find('option:selected').val();
+//     var playersNumber = $("#playersNumber").val();
+//     var data = {
+//         gamePointId: gamePointId,
+//         gameId: gameId,
+//         datetime: today,
+//         leftPlayers: leftPlayers,
+//         playersNumber: playersNumber
+//     };
+//     $.ajax({
+//         type: 'GET',
+//         url: '/TEST2',
+//         data: data,
+// //            contentType: 'application/json; charset=utf-8',
+//         success: function(data) {
+// //                alert(data);
+//             //jquery part
+//             $("#result-times").html(""); //clean
+//             $.each(data,
+//                 function(obj) {
+//                     var startTime = $(this)[0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted;
+//                     var totalPrice = 0;
+//                     $(this).each(function(x) {
+//                         totalPrice += $(this)[0].TotalPrice;
+//                     });
+//
+//                 });
+//             test2Result = data;
+//             console.log(data);
+//         }
+//     }).fail(function(data) {
+//         console.log(data);
+//     });
+// }
 
 function timeButtonClick(btn) {
 
 
-    var arrayId = $(btn).attr('arrayid');
+    var arrayId = $(btn).attr('data-array-id');
     var obj = test2Result[arrayId];
     $('#resultSelect').show();
     $('#referentsQuantity span').html('').append($('#contentSlider1').val());
@@ -383,36 +420,30 @@ function timeButtonClick(btn) {
     $('#result-tickets').append("<p> Start time is <b>" +
         obj[0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted +
         "</b></p>");
-    var leftPlayers = $('input[name=command]:checked').val();
 
     var allOrderPrice = 0;
     $.each(obj,
         function(element) {
             var totalCost = 0;
             var allRoomCost = $(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerRoom;
-            if (leftPlayers =='true') {
+            if (leftPlayers === true) {
                 totalCost = $(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer *
                     $(this)[0].PlayersNumber;
             } else {
                 totalCost = allRoomCost;
             }
             allOrderPrice += totalCost;
-            $('#dateGame p').html('').append(createDateDay2($('#gamemonth').val(), $('#day').val())+' в ' +
-                $(this)[0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted);
+            console.log(allOrderPrice);
 
 
-            $('#prcePer').html('').append($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer);
-            $('#resultPrice p').html('').append('Итого: '+($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer * $('#contentSlider1').val()));
-
-
-            $('#dateGame2 p').html('').append(createDateDay2($('#gamemonth').val(), $('#day').val())+' в ' +
-                $(this)[0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted);
-
-
-            $('#prcePer2').html('').append($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer);
-            $('#resultPrice2 p').html('').append('Итого: '+($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer * $('#contentSlider1').val()));
-
-            $('#bookthis').attr('arrayid',arrayId);
+            // $('#prcePer').html('').append($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer);
+            // $('#resultPrice p').html('').append('Итого: '+($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer * $('#contentSlider1').val()));
+            //
+            //
+            // $('#prcePer2').html('').append($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer);
+            // $('#resultPrice2 p').html('').append('Итого: '+($(this)[0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer * $('#contentSlider1').val()));
+            //
+            // $('#bookthis').attr('arrayid',arrayId);
 
         });
 }
@@ -856,6 +887,8 @@ function getTotalPrice() {
 
 function chooseSlot() {
     $('.booking-slots').on('click', 'td', function() {
+        var arrayId = $(this).find('.time').attr('data-array-id');
+
         $('.booking-slots').find('td').removeClass('active');
         $(this).addClass('active');
         currentDate = $(this).find('.time').attr("data-time-formatted");
@@ -895,11 +928,12 @@ function getTimeSlots() {
                     let table = '';
                     let inc = 0;
                     let lenghtResponse = 5;
+                    test2Result = response;
                     for (var i = 0; i < rowCount; i++) {
                         table += '<tr>';
                         for(var j = inc; j < lenghtResponse; j++) {
                             table += '<td>' +
-                                '<div class="time" data-time-formatted="'+ response[j][0].BookingRoomOptionModel.PricingSlotModel.StartTime + '">' + response[j][0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted + '</div>' +
+                                '<div class="time" onclick="timeButtonClick(this)" data-array-id="'+ j +'" data-time-formatted="'+ response[j][0].BookingRoomOptionModel.PricingSlotModel.StartTime + '">' + response[j][0].BookingRoomOptionModel.PricingSlotModel.StartTimeFormatted + '</div>' +
                                 '<div class="price"><span>' + response[j][0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer + '</span> р.' + '</div>';
                             table += '</td>';
                         }
@@ -911,9 +945,9 @@ function getTimeSlots() {
                         table += '</tr>';
                     }
                     $('.booking-slots tbody').html(table);
-                    for (var j = 0; j < response.length; j++) {
-                        console.log(response[j][0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer);
-                    }
+                    // for (var j = 0; j < response.length; j++) {
+                    //     console.log(j);
+                    // }
                 });
 
 
