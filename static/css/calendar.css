@@ -17,6 +17,10 @@
     z-index: -1;
 }
 
+.booking-calendar td:not(.calendar__day--btn) {
+/* disabled btns */
+}
+
 .calendar__control {
     font-size: 70px;
     line-height: 1;
@@ -59,16 +63,16 @@
     transition: all .25s;
 }
 
-.calendar__table td[data-date] {
+.calendar__day--btn {
     cursor: pointer;
     border: 2px solid #24b9d1;
 }
 
-.calendar__table td:hover {
+.calendar__day--btn:hover {
     color: #fff;
 }
 
-.calendar__table .active {
+.calendar__day--btn.active {
     border-color: #972c67;
     background-color: #972c67;
     color: #fff;
@@ -80,7 +84,7 @@
     font-size: 24px;
 }
 
-.calendar__current-day {
+.calendar__day--current {
     color: red;
 }
 
@@ -91,7 +95,7 @@
         width: 40px;
     }
 
-    .calendar__table .active {
+    .calendar__day--btn.active {
         font-size: 20px;
     }
 }

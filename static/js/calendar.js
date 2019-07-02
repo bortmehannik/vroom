@@ -23,6 +23,9 @@
         && year === actualDate.getFullYear()
     ;
 
+
+    const isPast = (year, month, day) => new Date(year, month, day).getTime() < actualDate.getTime();
+
     const renderCalendar = async (element, options) => {
 
         const year = options.year,
@@ -52,8 +55,20 @@
             calendar += '<td>&nbsp;</td>';
         }
 
+        let currentYear = date.getFullYear(),
+            currentMonth = date.getMonth();
+
         for(var i = 1; i <= lastDate; ++i) {
-            calendar += '<td data-date="' + year + '-' + (month + 1) + '-' + i + '" ' + (isActualDay(date.getFullYear(), date.getMonth(), i) ? ' class="calendar__current-day"' : '') + '><span>' + i + '</span></td>';
+            calendar += '<td data-date="'
+                            + year + '-' + (month + 1) + '-' + i + '" class="'
+                        + (
+                            isActualDay(currentYear, currentMonth, i)
+                            ? 'calendar__day--current'
+                            : (isPast(currentYear, currentMonth, i)
+                                ? 'calendar__day--past'
+                                : 'calendar__day--future'
+                            )
+                        ) + '"><span>' + i + '</span></td>';
 
             if(((i + (7 - (7 - firstDay + 1))) % 7) == 0) {
                 calendar += '</tr>';
@@ -76,10 +91,11 @@
 
         if(options.selectebleDate) {
 
-            const calendarCells = element.getElementsByTagName('td');
+            const calendarCells = element.querySelectorAll('td' + (options.selectOnlyFutureDates ? ':not(.calendar__day--past)' : ''));
 
             for(const cell of calendarCells) {
                 if('date' in cell.dataset) {
+                    cell.classList.add('calendar__day--btn');
                     cell.onclick = options.selectFunction;
                 }
             }
@@ -92,6 +108,7 @@
         // weekNumber: false,
         wrapper: false,
         selectebleDate: false,
+        selectOnlyFutureDates: true,
         selectFunction: undefined,
         controls: false,
         // controlsElements
@@ -106,6 +123,7 @@
             // weekNumber: options.weekNumber || false,
             wrapper: options.wrapper || false,
             selectebleDate: options.selectebleDate || false,
+            selectOnlyFutureDates: options.selectOnlyFutureDates || true,
             selectFunction: typeof options.selectFunction === "function" ? options.selectFunction : undefined
         };
 
@@ -120,6 +138,7 @@
                     this.options.year++;
                 } else this.options.month++;
                 renderCalendar(this.element, this.options);
+
             },
             prev: function () {
                 if(this.options.month == 0) {
@@ -127,6 +146,13 @@
                     this.options.year--;
                 } else this.options.month--;
                 renderCalendar(this.element, this.options);
+            },
+            getMonths: function () {
+                return {
+                    prev: monthNames[!this.options.month ? 11 : this.options.month - 1],
+                    current: monthNames[this.options.month],
+                    next: monthNames[this.options.month == 11 ? 0 : this.options.month + 1],
+                };
             }
         };
     }

@@ -16,11 +16,11 @@ var gameName;
 var poligonName;
 var price;
 var totalPrice;
+var months;
+
 function selectGame(gameId) {
     $('#gameId').val(gameId);
 
-    // $('#poligonsgames button').removeClass('activepoint');
-    // $('#gameid_'+gameId).addClass('activepoint');
     $('#step1').removeAttr('disabled');
     this.gameId = gameId;
     $('#games__list').find('.poligons-list__item').on('click', 'button', function() {
@@ -905,8 +905,9 @@ function getTimeSlots() {
         // wrapper: true,
         selectebleDate: true,
         selectFunction: function () {
+
             if ($(this).hasClass('active')) return;
-            $('.booking-calendar td.active').removeClass('active');
+            $('.booking-calendar .calendar__day--btn.active').removeClass('active');
             $(this).addClass('active');
             $('.result').css('display', 'none');
 
@@ -997,6 +998,19 @@ function getTimeSlots() {
         $('.calendar__control--next').on('click', () => {
             calendar.next();
         });
+
+        const prevControl = document.querySelector('.calendar__control--prev');
+        const nextControl = document.querySelector('.calendar__control--next');
+
+        months = calendar.getMonths();
+
+        prevControl.setAttribute('title', months.prev);
+        nextControl.setAttribute('title', months.next);
+
+        $('.calendar__control').on('click', () => {
+            months = calendar.getMonths();
+            prevControl.setAttribute('title', months.prev);
+            nextControl.setAttribute('title', months.next);
+        });
     });
 }
-
