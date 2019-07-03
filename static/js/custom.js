@@ -90,11 +90,11 @@ function bookApi() {
     };
     bookingRoomModels.push(bookingRoomModel);
     var data = {
-        PhoneNumber: $('.information span#name').text(),
-        ClientEmail: $('.information span#email').text(),
-        ClientName: $('.information span#phone').text(),
+        PhoneNumber: $(".formPay input[name='phone']").val(),
+        ClientEmail: $(".formPay input[name='mail']").val(),
+        ClientName: $(".formPay input[name='name']").val(),
         BookingRoomModels: bookingRoomModels,
-        PromoCodeString: ''
+        PromoCodeString: $(".formPay input[name='promo']").val()
     };
     console.log(data);
 
@@ -102,8 +102,11 @@ function bookApi() {
         type: 'POST',
         url: 'http://var-vision.com/Api/Booking/BookOrder',
         data: data,
+        beforeSend: function() {
+            $('.loader').css('display', 'block');
+        },
         success: function(data) {
-            console.log(data);
+            $('.loader').css('display', 'none');
             window.location.href = data.PaymentFormUrl;
         }
     }).fail(function(data) {
@@ -127,7 +130,6 @@ function getRooms(city) {
             success: function (data) {
                 var datatext = '';
                 $('.loader').css('display', 'none');
-                var gamesBtns = $('#poligonsgames .poligons__btn');
                 var gamesPrev = $('#poligonsgames .poligons__prev');
                 var gamesNext = $('#poligonsgames .poligons__next');
 
@@ -141,14 +143,36 @@ function getRooms(city) {
                     })
                 });
 
-                var gamesList = $("#games__list");
+                // TODO: убрать добавление элементов в datatext
+                // datatext +='<div class="poligons-list__item">\n' +
+                //     '<button class="poligons__btn" data-game-id="4" onclick="selectGame(4)" id="gameid_4"><p class="poligons__name games__name">Test</p></button>' + '</div>';
+                // datatext +='<div class="poligons-list__item">\n' +
+                //     '<button class="poligons__btn" data-game-id="5" onclick="selectGame(5)" id="gameid_5"><p class="poligons__name games__name">Test2</p></button>' + '</div>';
+
+                var gamesList = $('#games__list');
 
                 gamesList.html(datatext);
                 gamesList.owlCarousel('destroy');
 
+                var gamesBtns = $('#poligonsgames .poligons__btn');
+
+                console.log(gamesBtns.length);
                 if (gamesBtns.length > 3) {
+                    gamesList.removeClass('without-carousel');
+                    gamesList.addClass('owl-carousel');
                     gamesList.owlCarousel({
-                        nav: true
+                        nav: true,
+                        responsive: {
+                            0: {
+                                items: 1
+                            },
+                            410: {
+                                items: 2
+                            },
+                            960: {
+                                items: 3
+                            }
+                        }
                     });
 
                     gamesPrev.show();
@@ -159,8 +183,6 @@ function getRooms(city) {
                 }
 
                 $('#poligonsgames').removeClass('games--hide');
-
-
             }
         });
 }
@@ -184,7 +206,7 @@ $(document).ready(function () {
         // var gameId = $('#gameId').val();
         // var gamePointId = $('#pointId').val();
         var gamePointId = 1;
-        $.each($('#poligons__list .owl-item'), function() {
+        $.each($('#poligons__list .poligons-list__item'), function() {
             if ($(this).find('button').hasClass('activepoint')) {
                 gameName = $(this).find('button').children().clone();
             }
@@ -790,6 +812,9 @@ $(function () {
         $('.twoWindow').slideUp('slow', function () {
             $('.oneWindow').slideDown('slow');
         });
+        $('.booking-slots tbody').empty();
+        $('.calendar__table').find('td button').removeClass('active');
+        $('.result').css('display', 'none');
     });
     linkNextHome.on('click', function () {
         if (price !== undefined) {
@@ -821,7 +846,7 @@ $(function () {
             $('#nav-contact').addClass('show active');
             $('.information #name').text(this.name + ', ');
             $('.information #phone').text(this.phone);
-            $('.information #email').text(this.mail + ', ');
+            $('.information #email').text(this.mail + ',');
             $('a#nav-contact-tab').css({
                 'pointer-events': 'auto',
                 'color': '#ffffff'
@@ -870,7 +895,6 @@ function chooseSlot() {
         $('.booking-slots').find('td').removeClass('active');
         $(this).addClass('active');
         currentDate = $(this).find('.time').attr("data-time-formatted");
-        // price = $(this).find('.price span').text();
         priceWithoutPeople = 0;
         priceWithoutPeople = $(this).find('.price span').text();
         $('.result .referentsQuantity .prcePer').text(priceWithoutPeople);
@@ -881,6 +905,11 @@ function chooseSlot() {
         }
 
         $('.result').css('display', 'block');
+        if (leftPlayers === true) {
+            $('.dynamic-price').css('display', 'block');
+        } else {
+            $('.dynamic-price').css('display', 'none');
+        }
     });
 }
 
@@ -954,7 +983,18 @@ function getTimeSlots() {
             poligonsList.addClass('owl-carousel');
 
             $('#poligons__list').owlCarousel({
-                nav: true
+                nav: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    410: {
+                        items: 2
+                    },
+                    960: {
+                        items: 3
+                    }
+                }
             });
 
             poligonsPrev.on('click', function() {
