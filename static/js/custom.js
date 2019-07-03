@@ -206,7 +206,7 @@ $(document).ready(function () {
         // var gameId = $('#gameId').val();
         // var gamePointId = $('#pointId').val();
         var gamePointId = 1;
-        $.each($('#poligons__list .owl-item'), function() {
+        $.each($('#poligons__list .poligons-list__item'), function() {
             if ($(this).find('button').hasClass('activepoint')) {
                 gameName = $(this).find('button').children().clone();
             }
@@ -812,6 +812,9 @@ $(function () {
         $('.twoWindow').slideUp('slow', function () {
             $('.oneWindow').slideDown('slow');
         });
+        $('.booking-slots tbody').empty();
+        $('.calendar__table').find('td button').removeClass('active');
+        $('.result').css('display', 'none');
     });
     linkNextHome.on('click', function () {
         if (price !== undefined) {
@@ -892,7 +895,6 @@ function chooseSlot() {
         $('.booking-slots').find('td').removeClass('active');
         $(this).addClass('active');
         currentDate = $(this).find('.time').attr("data-time-formatted");
-        // price = $(this).find('.price span').text();
         priceWithoutPeople = 0;
         priceWithoutPeople = $(this).find('.price span').text();
         $('.result .referentsQuantity .prcePer').text(priceWithoutPeople);
@@ -903,6 +905,11 @@ function chooseSlot() {
         }
 
         $('.result').css('display', 'block');
+        if (leftPlayers === true) {
+            $('.dynamic-price').css('display', 'block');
+        } else {
+            $('.dynamic-price').css('display', 'none');
+        }
     });
 }
 

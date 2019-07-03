@@ -1208,6 +1208,10 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.dynamic-price {
+    display: none;
+}
+
 
 
 
