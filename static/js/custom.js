@@ -916,17 +916,12 @@ function getSlots(data) {
 function getTimeSlots() {
     let a = null;
     const calendar = new Calendar(document.querySelector('.calendar__wrapper'), {
-        // wrapper: true,
         selectebleDate: true,
         selectFunction: function () {
 
-            if ($(this).hasClass('active')) return;
-            $('.booking-calendar .calendar__day--btn.active').removeClass('active');
-            $(this).addClass('active');
             $('.result').css('display', 'none');
 
-
-            currentCell = new Date(this.dataset.date);
+            let currentDate = new Date(this.value);
 
             const data = {
                 gamePointId: pointId,
@@ -939,8 +934,6 @@ function getTimeSlots() {
             const currentDay = document.querySelector('.slot__current-day');
             currentDay.innerHTML = currentCell.getLocaleString().toUpperCase();
             getSlots(data);
-
-
         }
     });
 
