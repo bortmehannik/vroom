@@ -61,19 +61,19 @@
 }
 
 .booking-calendar .calendar__day--past {
-    border: 2px solid #1c6f91;
+    border: 1px solid #1c6f91;
     color: #1c6f91;
 }
 
 .calendar__day--btn {
-    border: 2px solid #24b9d1;
+    border: 1px solid #24b9d1;
     height: 100%;
     width: 100%;
     color: inherit;
     transition: all .25s;
 }
 
-.calendar__day--btn:focus {
+.calendar__day--btn.active {
     outline: 0;
     border-color: #972c67;
     background-color: #972c67;
@@ -102,7 +102,7 @@
         width: 40px;
     }
 
-    .calendar__day--btn:focus {
+    .calendar__day--btn.active {
         font-size: 20px;
     }
 }

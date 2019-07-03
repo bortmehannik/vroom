@@ -919,6 +919,9 @@ function getTimeSlots() {
         selectebleDate: true,
         selectFunction: function () {
 
+            $('.calendar__day--btn.active').removeClass('active');
+            $(this).addClass('active');
+
             $('.result').css('display', 'none');
 
             currentCell = new Date(this.value);
