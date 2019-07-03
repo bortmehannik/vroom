@@ -57,11 +57,11 @@
         }
 
         .poligons__wrapper .poligons__prev {
-            margin-right: 20px;
+            margin-right: 10px;
         }
 
         .poligons__wrapper .poligons__next {
-            margin-left: 20px;
+            margin-left: 10px;
         }
 
         .poligons-list {
@@ -74,6 +74,7 @@
         }
 
         .poligons-list__item {
+            text-align: center;
             padding: 30px 0;
         }
 
@@ -83,6 +84,10 @@
             line-height: 14px;
             text-transform: uppercase;
             text-align: left;
+        }
+
+        #games__list .poligons__btn {
+            max-width: 140px;
         }
 
         .poligons__btn:focus {
@@ -125,6 +130,52 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: contain;
+        }
+
+        @media screen and (max-width: 959px) {
+            .poligons-list {
+                width: 350px;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .poligons, .games {
+                display: block;
+            }
+
+            .poligons__title {
+                text-align: left;
+                padding-left: 0;
+                padding-bottom: 0;
+            }
+
+            .poligons__wrapper {
+                margin-left: 0;
+            }
+
+            .poligons-list.without-carousel {
+                flex-direction: column;
+            }
+
+            .poligons-list.without-carousel .poligons-list__item {
+                text-align: left;
+            }
+
+            .poligons-list.without-carousel .poligons-list__item:not(:last-child) {
+                padding-bottom: 0;
+            }
+        }
+
+        @media screen and (max-width: 539px) {
+            .poligons-list {
+                width: 320px;
+            }
+        }
+
+        @media screen and (max-width: 409px) {
+            .poligons-list {
+                width: 200px;
+            }
         }
     </style>
 </head>

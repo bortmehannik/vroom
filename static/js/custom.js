@@ -130,7 +130,6 @@ function getRooms(city) {
             success: function (data) {
                 var datatext = '';
                 $('.loader').css('display', 'none');
-                var gamesBtns = $('#poligonsgames .poligons__btn');
                 var gamesPrev = $('#poligonsgames .poligons__prev');
                 var gamesNext = $('#poligonsgames .poligons__next');
 
@@ -144,14 +143,36 @@ function getRooms(city) {
                     })
                 });
 
-                var gamesList = $("#games__list");
+                // TODO: убрать добавление элементов в datatext
+                datatext +='<div class="poligons-list__item">\n' +
+                    '<button class="poligons__btn" data-game-id="4" onclick="selectGame(4)" id="gameid_4"><p class="poligons__name games__name">Test</p></button>' + '</div>';
+                datatext +='<div class="poligons-list__item">\n' +
+                    '<button class="poligons__btn" data-game-id="5" onclick="selectGame(5)" id="gameid_5"><p class="poligons__name games__name">Test2</p></button>' + '</div>';
+
+                var gamesList = $('#games__list');
 
                 gamesList.html(datatext);
                 gamesList.owlCarousel('destroy');
 
+                var gamesBtns = $('#poligonsgames .poligons__btn');
+
+                console.log(gamesBtns.length);
                 if (gamesBtns.length > 3) {
+                    gamesList.removeClass('without-carousel');
+                    gamesList.addClass('owl-carousel');
                     gamesList.owlCarousel({
-                        nav: true
+                        nav: true,
+                        responsive: {
+                            0: {
+                                items: 1
+                            },
+                            410: {
+                                items: 2
+                            },
+                            960: {
+                                items: 3
+                            }
+                        }
                     });
 
                     gamesPrev.show();
@@ -162,8 +183,6 @@ function getRooms(city) {
                 }
 
                 $('#poligonsgames').removeClass('games--hide');
-
-
             }
         });
 }
@@ -957,7 +976,18 @@ function getTimeSlots() {
             poligonsList.addClass('owl-carousel');
 
             $('#poligons__list').owlCarousel({
-                nav: true
+                nav: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    410: {
+                        items: 2
+                    },
+                    960: {
+                        items: 3
+                    }
+                }
             });
 
             poligonsPrev.on('click', function() {
