@@ -67,7 +67,8 @@
             currentMonth = date.getMonth();
 
         for(let i = 1; i <= lastDate; ++i) {
-            const dateValue = year + '-' + (month + 1) + '-' + i;
+            // const dateValue = year + '-' + (month + 1) + '-' + i;
+            const dateValue = date.toString();
             const isPastDate = isPast(currentYear, currentMonth, i);
             calendar += '<td data-date="'
                             + dateValue + '" class="'
