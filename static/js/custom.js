@@ -921,7 +921,7 @@ function getTimeSlots() {
 
             $('.result').css('display', 'none');
 
-            let currentDate = new Date(this.value);
+            currentCell = new Date(this.value);
 
             const data = {
                 gamePointId: pointId,
