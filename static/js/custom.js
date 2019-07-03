@@ -846,7 +846,7 @@ $(function () {
             $('#nav-contact').addClass('show active');
             $('.information #name').text(this.name + ', ');
             $('.information #phone').text(this.phone);
-            $('.information #email').text(this.mail + '');
+            $('.information #email').text(this.mail + ',');
             $('a#nav-contact-tab').css({
                 'pointer-events': 'auto',
                 'color': '#ffffff'
