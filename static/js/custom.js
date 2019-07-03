@@ -919,6 +919,7 @@ function getTimeSlots() {
         selectebleDate: true,
         selectFunction: function () {
 
+            if($(this).hasClass('active')) return;
             $('.calendar__day--btn.active').removeClass('active');
             $(this).addClass('active');
 

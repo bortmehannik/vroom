@@ -105,7 +105,7 @@
 
             for(const cell of calendarCells) {
                 cell.classList.add('calendar__day--btn');
-                cell.onfocus = options.selectFunction;
+                cell.onclick = options.selectFunction;
             }
         }
     };
