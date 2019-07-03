@@ -90,11 +90,11 @@ function bookApi() {
     };
     bookingRoomModels.push(bookingRoomModel);
     var data = {
-        PhoneNumber: $('.information span#name').text(),
-        ClientEmail: $('.information span#email').text(),
-        ClientName: $('.information span#phone').text(),
+        PhoneNumber: $(".formPay input[name='phone']").val(),
+        ClientEmail: $(".formPay input[name='mail']").val(),
+        ClientName: $(".formPay input[name='name']").val(),
         BookingRoomModels: bookingRoomModels,
-        PromoCodeString: ''
+        PromoCodeString: $(".formPay input[name='promo']").val()
     };
     console.log(data);
 
@@ -102,8 +102,11 @@ function bookApi() {
         type: 'POST',
         url: 'http://var-vision.com/Api/Booking/BookOrder',
         data: data,
+        beforeSend: function() {
+            $('.loader').css('display', 'block');
+        },
         success: function(data) {
-            console.log(data);
+            $('.loader').css('display', 'none');
             window.location.href = data.PaymentFormUrl;
         }
     }).fail(function(data) {
@@ -821,7 +824,7 @@ $(function () {
             $('#nav-contact').addClass('show active');
             $('.information #name').text(this.name + ', ');
             $('.information #phone').text(this.phone);
-            $('.information #email').text(this.mail + ', ');
+            $('.information #email').text(this.mail + '');
             $('a#nav-contact-tab').css({
                 'pointer-events': 'auto',
                 'color': '#ffffff'
