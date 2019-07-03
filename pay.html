@@ -261,13 +261,10 @@
                                     <button class="calendar__control calendar__control--next">&#8250;</button>
                             </div>
                             <div class="booking-slots">
-                                <p class="slot__current-day">Суббота 30 июня</p>
+                                <p class="slot__current-day"></p>
                                 <table>
                                     <tbody></tbody>
                                 </table>
-                            </div>
-                            <div class="card-body" id="result-tickets">
-                                Tickets will be here
                             </div>
                             <div class="reference">
                                 <div class="item">
@@ -328,14 +325,16 @@
                             <div class="formPay">
                                 <form action="" method="post" novalidate>
                                     <div class="inputs">
-                                        <input type="text" placeholder="Ваше имя*" name="name" id="confirmBookingName"
-                                            required>
-                                        <div class="lineForm"></div>
-                                        <input type="tel" placeholder="Телефон*" id="confirmBookingPhone" name="phone"
-                                            required>
-                                        <div class="lineForm"></div>
-                                        <input type="email" placeholder="E-mail*" id="confirmBookingEmail" name="mail"
-                                            required>
+                                        <div class="required-inputs">
+                                            <input type="text" placeholder="Ваше имя*" name="name" id="confirmBookingName"
+                                                   required>
+                                            <div class="lineForm"></div>
+                                            <input type="tel" placeholder="Телефон*" id="confirmBookingPhone" name="phone"
+                                                   required>
+                                            <div class="lineForm"></div>
+                                            <input type="email" placeholder="E-mail*" id="confirmBookingEmail" name="mail"
+                                                   required>
+                                        </div>
                                         <div class="lineForm"></div>
                                         <input type="text" placeholder="Примечания" name="notes">
                                         <div class="lineForm"></div>
@@ -637,6 +636,10 @@
             <!--});-->
         <!--});-->
     <!--</script>-->
+
+<div class="loader">
+    <img src="static/img/loader.gif" alt="Загрузка..." width="100">
+</div>
 
 </body>
 

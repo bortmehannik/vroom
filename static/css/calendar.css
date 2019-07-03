@@ -17,9 +17,7 @@
     z-index: -1;
 }
 
-.booking-calendar td:not(.calendar__day--btn) {
-/* disabled btns */
-}
+
 
 .calendar__control {
     font-size: 70px;
@@ -63,7 +61,12 @@
     transition: all .25s;
 }
 
-.calendar__day--btn {
+.booking-calendar td.calendar__day--past {
+    border: 2px solid #1c6f91;
+    color: #1c6f91;
+}
+
+.booking-calendar td.calendar__day--btn {
     cursor: pointer;
     border: 2px solid #24b9d1;
 }
