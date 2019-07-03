@@ -60,23 +60,27 @@
     width: 55px;
     line-height: 1;
     font-size: 20px;
-    transition: all .25s;
 }
 
 .calendar__day--btn {
-    cursor: pointer;
-    border: 2px solid #24b9d1;
+    border: 1px solid #24b9d1;
+    height: 100%;
+    width: 100%;
+    color: inherit;
+    transition: all .25s;
 }
 
-.calendar__day--btn:hover {
-    color: #fff;
-}
-
-.calendar__day--btn.active {
+.calendar__day--btn:focus {
+    outline: 0;
     border-color: #972c67;
     background-color: #972c67;
     color: #fff;
     font-size: 24px;
+    transform: scale(1.1);
+}
+
+.calendar__day--btn:hover {
+    color: #fff;
 }
 
 .calendar__month-title {
@@ -95,7 +99,7 @@
         width: 40px;
     }
 
-    .calendar__day--btn.active {
+    .calendar__day--btn:focus {
         font-size: 20px;
     }
 }

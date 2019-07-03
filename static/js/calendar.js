@@ -15,6 +15,14 @@
         return this.getDate() + ' ' + monthName + ' ' + this.getFullYear();
     };
 
+    Date.prototype.getWeek = function() {
+        const date = new Date(this.getTime());
+        date.setHours(0, 0, 0, 0);
+        date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+        const week = new Date(date.getFullYear(), 0, 4);
+        return 1 + Math.round(((date.getTime() - week.getTime()) / 86400000 - 3 + (week.getDay() + 6) % 7) / 7);
+    };
+
     let actualDate = new Date();
 
     const isActualDay = (year, month, day) =>
@@ -24,7 +32,7 @@
     ;
 
 
-    const isPast = (year, month, day) => new Date(year, month, day).getTime() < actualDate.getTime();
+    const isPast = (year, month, day) => new Date(year, month, day).getTime() < actualDate.getTime() && !isActualDay(year, month, day);
 
     const renderCalendar = async (element, options) => {
 
@@ -58,19 +66,21 @@
         let currentYear = date.getFullYear(),
             currentMonth = date.getMonth();
 
-        for(var i = 1; i <= lastDate; ++i) {
+        for(let i = 1; i <= lastDate; ++i) {
+            const dateValue = year + '-' + (month + 1) + '-' + i;
+            const isPastDate = isPast(currentYear, currentMonth, i);
             calendar += '<td data-date="'
-                            + year + '-' + (month + 1) + '-' + i + '" class="'
+                            + dateValue + '" class="'
                         + (
                             isActualDay(currentYear, currentMonth, i)
                             ? 'calendar__day--current'
-                            : (isPast(currentYear, currentMonth, i)
+                            : (isPastDate
                                 ? 'calendar__day--past'
                                 : 'calendar__day--future'
                             )
-                        ) + '"><span>' + i + '</span></td>';
+                        ) + '"><' + (options.selectebleDate && (!options.selectOnlyFutureDates || !isPastDate) ? 'button value="' + dateValue + '"' : 'span') + '>' + i + '</' + (options.selectebleDate ? 'button' : 'span' ) + '></td>';
 
-            if(((i + (7 - (7 - firstDay + 1))) % 7) == 0) {
+            if((i + firstDay - 1) % 7 == 0) {
                 calendar += '</tr>';
                 if(i != lastDate) {
                     calendar += '<tr>';
@@ -91,13 +101,11 @@
 
         if(options.selectebleDate) {
 
-            const calendarCells = element.querySelectorAll('td' + (options.selectOnlyFutureDates ? ':not(.calendar__day--past)' : ''));
+            const calendarCells = element.querySelectorAll('td[data-date]' + (options.selectOnlyFutureDates ? ':not(.calendar__day--past)' : '') + '>button');
 
             for(const cell of calendarCells) {
-                if('date' in cell.dataset) {
-                    cell.classList.add('calendar__day--btn');
-                    cell.onclick = options.selectFunction;
-                }
+                cell.classList.add('calendar__day--btn');
+                cell.onfocus = options.selectFunction;
             }
         }
     };

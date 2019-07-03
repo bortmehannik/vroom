@@ -869,17 +869,13 @@ function chooseSlot() {
 function getTimeSlots() {
     let a = null;
     const calendar = new Calendar(document.querySelector('.calendar__wrapper'), {
-        // wrapper: true,
         selectebleDate: true,
         selectFunction: function () {
 
-            if ($(this).hasClass('active')) return;
-            $('.booking-calendar .calendar__day--btn.active').removeClass('active');
-            $(this).addClass('active');
             $('.result').css('display', 'none');
 
 
-            let currentDate = new Date(this.dataset.date);
+            let currentDate = new Date(this.value);
 
             const data = {
                 gamePointId: pointId,
@@ -916,8 +912,6 @@ function getTimeSlots() {
                         console.log(response[j][0].BookingRoomOptionModel.PricingSlotModel.PricingRule.PricePerPlayer);
                     }
                 });
-
-
         }
     });
 
