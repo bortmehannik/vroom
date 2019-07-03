@@ -144,10 +144,10 @@ function getRooms(city) {
                 });
 
                 // TODO: убрать добавление элементов в datatext
-                datatext +='<div class="poligons-list__item">\n' +
-                    '<button class="poligons__btn" data-game-id="4" onclick="selectGame(4)" id="gameid_4"><p class="poligons__name games__name">Test</p></button>' + '</div>';
-                datatext +='<div class="poligons-list__item">\n' +
-                    '<button class="poligons__btn" data-game-id="5" onclick="selectGame(5)" id="gameid_5"><p class="poligons__name games__name">Test2</p></button>' + '</div>';
+                // datatext +='<div class="poligons-list__item">\n' +
+                //     '<button class="poligons__btn" data-game-id="4" onclick="selectGame(4)" id="gameid_4"><p class="poligons__name games__name">Test</p></button>' + '</div>';
+                // datatext +='<div class="poligons-list__item">\n' +
+                //     '<button class="poligons__btn" data-game-id="5" onclick="selectGame(5)" id="gameid_5"><p class="poligons__name games__name">Test2</p></button>' + '</div>';
 
                 var gamesList = $('#games__list');
 
