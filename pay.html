@@ -70,7 +70,10 @@
 
         .poligons-list.without-carousel {
             display: flex;
-            justify-content: space-between;
+        }
+
+        .poligons-list.without-carousel .poligons-list__item {
+            margin-right: 30px;
         }
 
         .poligons-list__item {
@@ -135,6 +138,10 @@
         @media screen and (max-width: 959px) {
             .poligons-list {
                 width: 350px;
+            }
+
+            .poligons-list.without-carousel {
+                flex-wrap: wrap;
             }
         }
 
