@@ -69,14 +69,18 @@ $(document).ready(function() {
         privacy = !privacy;
         console.log(privacy);
     });
-
     chooseSlot();
     getTimeSlots();
+    clearInputs();
 });
 
 $('.go-to-pay').click(function() {
     bookApi();
 });
+
+function clearInputs() {
+    $('#policy').prop('checked', false);
+}
 
 function bookApi() {
 
@@ -855,13 +859,13 @@ $(function () {
         } else {
             $('.required-inputs input').each(function() {
                 if ($(this).val() === '') {
-                    $(this).css('border', '1px solid red');
+                    $(this).css('border', '1px solid #972c67');
                 } else {
                     $(this).css('border', 'none');
                 }
             });
             if (privacy === false) {
-                $('label[for="policy"]').css('color', 'red');
+                $('label[for="policy"]').css('color', '#972c67');
             } else {
                 $('label[for="policy"]').css('color', 'inherit')
             }

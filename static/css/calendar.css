@@ -66,7 +66,6 @@
 }
 
 .calendar__day--btn {
-    border: 1px solid #24b9d1;
     height: 100%;
     width: 100%;
     color: inherit;
@@ -86,13 +85,17 @@
     color: #fff;
 }
 
+.calendar__table td.calendar__day--future, .calendar__table td.calendar__day--current {
+    border: 2px solid #24b9d1;
+}
+
 .calendar__month-title {
     text-align: center;
     font-size: 24px;
 }
 
 .calendar__day--current {
-    color: red;
+    color: #ffffff;
 }
 
 @media (max-width: 480px) {
