@@ -72,6 +72,12 @@ $(document).ready(function() {
     chooseSlot();
     getTimeSlots();
     clearInputs();
+    $('input[name="promo"]').on('input', function() {
+       if ($(this).val().length === 6) {
+           alert('Введено 6 символов и будет выполнен запрос');
+       }
+    });
+    getPoints('Санкт-Петербург');
 });
 
 $('.go-to-pay').click(function() {
@@ -98,7 +104,8 @@ function bookApi() {
         ClientEmail: $(".formPay input[name='mail']").val(),
         ClientName: $(".formPay input[name='name']").val(),
         BookingRoomModels: bookingRoomModels,
-        PromoCodeString: $(".formPay input[name='promo']").val()
+        PromoCodeString: $(".formPay input[name='promo']").val(),
+        IsBookingWithoutPay: true
     };
     console.log(data);
 
@@ -111,12 +118,35 @@ function bookApi() {
         },
         success: function(data) {
             $('.loader').css('display', 'none');
-            window.location.href = data.PaymentFormUrl;
+            if (data.PaymentFormUrl == null) {
+                $('.success-pay').css('display', 'block');
+            } else {
+                window.location.href = data.PaymentFormUrl;
+            }
         }
     }).fail(function(data) {
         console.log(data);
         alert(data.responseJSON.Message);
 
+    });
+}
+
+function getPoints(city) {
+    $.ajax({
+        type: "GET",
+        url: "http://var-vision.com/Api/Booking/GetGamePointsAndRoomsForCity?city="+city,
+        dataType: "json",
+        beforeSend: function() {
+            $('.loader').css('display', 'block');
+        },
+        success: function(data) {
+            $('.loader').css('display', 'none');
+            for (var i = 0; i < data.length; i++) {
+                // console.log(data[i].Name);
+                $('#poligons__list').html('<div class="poligons-list__item"><button class="poligons__btn" data-point-id="' + data[i].Id + '" onclick="selectPoint('+data[i].Id+')"><p class="poligons__name">'+data[i].Name+'</p><p class="poligons__metro">'+data[i].MetroStation+'</p></button></div>');
+                console.log(data);
+            }
+        }
     });
 }
 
@@ -195,8 +225,12 @@ function selectPoint(pointId) {
     //отправляем запрос на api
 
     $('#pointId').val(pointId);
-    $('#poligons .poligons__btn').removeClass('activepoint');
-    $('#poligon_'+pointId).addClass('activepoint');
+    $('#poligons__list').find('.poligons-list__item').each(function() {
+        $('#poligons__list').find('.poligons__btn').removeClass('activepoint');
+       $(this).find('.poligons__btn').addClass('activepoint');
+    });
+    // $('#poligons .poligons__btn').removeClass('activepoint');
+    // $('#poligon_'+pointId).addClass('activepoint');
     this.pointId = 1;
 
 
@@ -926,7 +960,7 @@ function getSlots(data) {
         let inc = 0;
         let lenghtResponse = 5;
         test2Result = response;
-        console.log(response);
+        console.log(response.length);
         for (var i = 0; i < rowCount; i++) {
             table += '<tr>';
             for(var j = inc; j < lenghtResponse; j++) {
@@ -942,7 +976,11 @@ function getSlots(data) {
             inc += 5;
             table += '</tr>';
         }
-        $('.booking-slots tbody').html(table);
+        if (response.length === 0) {
+            $('.booking-slots tbody').html('<tr><td style="pointer-events: none;">Свободные места отсутствуют</td></tr>>')
+        } else {
+            $('.booking-slots tbody').html(table);
+        }
     });
 }
 

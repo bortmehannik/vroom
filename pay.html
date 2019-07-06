@@ -214,12 +214,12 @@
                             <div class="poligons__wrapper">
                                 <button class="poligons__prev"><</button>
                                 <div id="poligons__list" class="poligons-list without-carousel">
-                                    <div class="poligons-list__item">
-                                        <button class="poligons__btn" data-point-id="1" onclick="selectPoint(1);" id="poligon_1">
-                                            <p class="poligons__name">VRoomGames</p>
-                                            <p class="poligons__metro">Горьковская</p>
-                                        </button>
-                                    </div>
+                                    <!--<div class="poligons-list__item">-->
+                                        <!--<button class="poligons__btn" data-point-id="1" onclick="selectPoint(1);" id="poligon_1">-->
+                                            <!--<p class="poligons__name">VRoomGames</p>-->
+                                            <!--<p class="poligons__metro">Горьковская</p>-->
+                                        <!--</button>-->
+                                    <!--</div>-->
                                 </div>
                                 <button class="poligons__next">></button>
                             </div>
@@ -380,7 +380,7 @@
                                         <div class="lineForm"></div>
                                         <input type="text" placeholder="Примечания" name="notes">
                                         <div class="lineForm"></div>
-                                        <input type="text" placeholder="Промокод" name="promo">
+                                        <input type="text" placeholder="Промокод" name="promo" maxlength="6">
                                         <div class="lineForm"></div>
                                     </div>
                                     <div class="promo">
@@ -686,6 +686,10 @@
 
 <div class="loader">
     <img src="static/img/loader.gif" alt="Загрузка..." width="100">
+</div>
+<div class="success-pay">
+    <h2>Вы успешно забронировали сеанс</h2>
+    <a href="/pay.html">Закрыть</a>
 </div>
 
 </body>
